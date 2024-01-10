@@ -17,7 +17,7 @@ class CheckoutCard extends StatelessWidget {
       ),
       // height: 174,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color.fromARGB(255, 181, 183, 180),
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
@@ -64,12 +64,14 @@ class CheckoutCard extends StatelessWidget {
                   child: Text.rich(
                     TextSpan(
                       text: "Total:\n",
+                      style: TextStyle(
+                          fontSize: 16, color: Color.fromARGB(255, 0, 0, 0)),
                       children: [
                         TextSpan(
                           text: "\$337.15",
                           style: TextStyle(
                               fontSize: 16,
-                              color: Color.fromARGB(255, 184, 184, 183)),
+                              color: Color.fromARGB(255, 0, 0, 0)),
                         ),
                       ],
                     ),

@@ -15,7 +15,7 @@ class SpecialOffers extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SectionTitle(
-            title: "Special for you",
+            title: "Stores",
             press: () {},
           ),
         ),
@@ -25,7 +25,15 @@ class SpecialOffers extends StatelessWidget {
             children: [
               SpecialOfferCard(
                 image: "assets/images/Image Banner 2.png",
-                category: "Smartphone",
+                category: "EVMINUTE",
+                numOfBrands: 18,
+                press: () {
+                  Navigator.pushNamed(context, ProductsScreen.routeName);
+                },
+              ),
+              SpecialOfferCard(
+                image: "assets/images/Image Banner 2.png",
+                category: "Motion Motors",
                 numOfBrands: 18,
                 press: () {
                   Navigator.pushNamed(context, ProductsScreen.routeName);
@@ -33,7 +41,7 @@ class SpecialOffers extends StatelessWidget {
               ),
               SpecialOfferCard(
                 image: "assets/images/Image Banner 3.png",
-                category: "Fashion",
+                category: "Solaris",
                 numOfBrands: 24,
                 press: () {
                   Navigator.pushNamed(context, ProductsScreen.routeName);
