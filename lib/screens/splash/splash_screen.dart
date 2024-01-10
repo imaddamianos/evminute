@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   int currentPage = 0;
   List<Map<String, String>> splashData = [
     {
-      "text": "Welcome to Tokoto, Let’s shop!",
+      "text": "Welcome to EVMINUTE, Let’s go ELectric!",
       "image": "assets/images/splash_1.png"
     },
     {

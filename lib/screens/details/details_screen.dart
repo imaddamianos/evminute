@@ -39,7 +39,7 @@ class DetailsScreen extends StatelessWidget {
             ),
             child: const Icon(
               Icons.arrow_back_ios_new,
-              color: Colors.black,
+              color: Color.fromARGB(255, 184, 184, 183),
               size: 20,
             ),
           ),
@@ -61,7 +61,7 @@ class DetailsScreen extends StatelessWidget {
                       "4.7",
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 184, 184, 183),
                         fontWeight: FontWeight.w600,
                       ),
                     ),

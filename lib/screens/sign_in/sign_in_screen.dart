@@ -26,7 +26,7 @@ class SignInScreen extends StatelessWidget {
                   const Text(
                     "Welcome Back",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Color.fromARGB(255, 184, 184, 183),
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),

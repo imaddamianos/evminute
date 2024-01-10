@@ -25,7 +25,7 @@ class LoginSuccessScreen extends StatelessWidget {
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: Color.fromARGB(255, 184, 184, 183),
             ),
           ),
           const Spacer(),

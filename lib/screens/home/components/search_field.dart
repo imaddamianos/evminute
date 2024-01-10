@@ -21,7 +21,10 @@ class SearchField extends StatelessWidget {
           focusedBorder: searchOutlineInputBorder,
           enabledBorder: searchOutlineInputBorder,
           hintText: "Search product",
-          prefixIcon: const Icon(Icons.search),
+          hintStyle: const TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
+          labelStyle:
+              const TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
+          prefixIcon: const Icon(Icons.search, color: Colors.white),
         ),
       ),
     );

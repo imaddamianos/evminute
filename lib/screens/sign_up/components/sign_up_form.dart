@@ -66,6 +66,8 @@ class _SignUpFormState extends State<SignUpForm> {
             decoration: const InputDecoration(
               labelText: "Email",
               hintText: "Enter your email",
+              hintStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
+              labelStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
               // If  you are using latest version of flutter then lable text and hint text shown like this
               // if you r using flutter less then 1.20.* then maybe this is not working properly
               floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -97,6 +99,8 @@ class _SignUpFormState extends State<SignUpForm> {
             decoration: const InputDecoration(
               labelText: "Password",
               hintText: "Enter your password",
+              hintStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
+              labelStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
               // If  you are using latest version of flutter then lable text and hint text shown like this
               // if you r using flutter less then 1.20.* then maybe this is not working properly
               floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -128,6 +132,8 @@ class _SignUpFormState extends State<SignUpForm> {
             decoration: const InputDecoration(
               labelText: "Confirm Password",
               hintText: "Re-enter your password",
+              hintStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
+              labelStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
               // If  you are using latest version of flutter then lable text and hint text shown like this
               // if you r using flutter less then 1.20.* then maybe this is not working properly
               floatingLabelBehavior: FloatingLabelBehavior.always,

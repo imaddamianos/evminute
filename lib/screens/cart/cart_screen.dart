@@ -23,7 +23,7 @@ class _CartScreenState extends State<CartScreen> {
           children: [
             const Text(
               "Your Cart",
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
             ),
             Text(
               "${demoCarts.length} items",
