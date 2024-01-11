@@ -5,6 +5,8 @@ import '../../components/no_account_text.dart';
 import '../../components/socal_card.dart';
 import 'components/sign_form.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:evminute/screens/sign_in/components/sign_form.dart';
+import 'package:evminute/screens/login_success/login_success_screen.dart';
 
 class SignInScreen extends StatelessWidget {
   static String routeName = "/sign_in";
@@ -12,15 +14,20 @@ class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  Future<void> signInWithGoogle() async {
+  Future<void> signInWithGoogle(context) async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       final GoogleSignInAuthentication? googleAuth =
           await googleUser?.authentication;
+
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
+      debugPrint(credential.accessToken.toString());
+      debugPrint(credential.idToken.toString());
+      Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+      debugPrint(credential as String?);
       // Use the credential to sign in with Firebase or your preferred authentication system
     } catch (e) {
       // Handle errors
@@ -55,11 +62,6 @@ class SignInScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Text(
-                    "Sign in with your email and password  \nor continue google",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white),
-                  ),
                   const SizedBox(height: 16),
                   const SignForm(),
                   const SizedBox(height: 16),
@@ -69,17 +71,14 @@ class SignInScreen extends StatelessWidget {
                       SocalCard(
                         icon: "assets/icons/google-icon.svg",
                         press: () {
-                          signInWithGoogle();
+                          signInWithGoogle(context);
                         },
                       ),
-                      // SocalCard(
-                      //   icon: "assets/icons/facebook-2.svg",
-                      //   press: () {},
-                      // ),
-                      // SocalCard(
-                      //   icon: "assets/icons/twitter.svg",
-                      //   press: () {},
-                      // ),
+                      const Text(
+                        "Sign in with Google",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
