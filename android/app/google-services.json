@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "729418199644",
+    "project_id": "evminute-519e3",
+    "storage_bucket": "evminute-519e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729418199644:android:c6b68ded3890ae120b6c99",
+        "android_client_info": {
+          "package_name": "com.example.evminute"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "729418199644-q1q57dlgprehv004e3f8881tialam2vq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCCmDyqmbhbT8oaRoEBleCxQAND3dyx3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "729418199644-q1q57dlgprehv004e3f8881tialam2vq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "729418199644-7mlc9puvaomai3uajnhdlpv30hu6cmoi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "imps.evminute"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

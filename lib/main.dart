@@ -1,11 +1,13 @@
+import 'package:evminute/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:evminute/screens/splash/splash_screen.dart';
 
 import 'routes.dart';
 import 'theme.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

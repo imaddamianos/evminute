@@ -1,13 +1,33 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/no_account_text.dart';
 import '../../components/socal_card.dart';
 import 'components/sign_form.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SignInScreen extends StatelessWidget {
   static String routeName = "/sign_in";
 
-  const SignInScreen({super.key});
+  SignInScreen({super.key});
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Future<void> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      // Use the credential to sign in with Firebase or your preferred authentication system
+    } catch (e) {
+      // Handle errors
+      debugPrint(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +63,9 @@ class SignInScreen extends StatelessWidget {
                     children: [
                       SocalCard(
                         icon: "assets/icons/google-icon.svg",
-                        press: () {},
+                        press: () {
+                          signInWithGoogle();
+                        },
                       ),
                       SocalCard(
                         icon: "assets/icons/facebook-2.svg",
