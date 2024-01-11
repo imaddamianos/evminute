@@ -42,6 +42,10 @@ class SignInScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  Image.asset(
+                    "assets/images/splash_1.png",
+                    width: 200,
+                  ),
                   const SizedBox(height: 16),
                   const Text(
                     "Welcome Back",
@@ -52,8 +56,9 @@ class SignInScreen extends StatelessWidget {
                     ),
                   ),
                   const Text(
-                    "Sign in with your email and password  \nor continue with social media",
+                    "Sign in with your email and password  \nor continue google",
                     textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white),
                   ),
                   const SizedBox(height: 16),
                   const SignForm(),
@@ -67,14 +72,14 @@ class SignInScreen extends StatelessWidget {
                           signInWithGoogle();
                         },
                       ),
-                      SocalCard(
-                        icon: "assets/icons/facebook-2.svg",
-                        press: () {},
-                      ),
-                      SocalCard(
-                        icon: "assets/icons/twitter.svg",
-                        press: () {},
-                      ),
+                      // SocalCard(
+                      //   icon: "assets/icons/facebook-2.svg",
+                      //   press: () {},
+                      // ),
+                      // SocalCard(
+                      //   icon: "assets/icons/twitter.svg",
+                      //   press: () {},
+                      // ),
                     ],
                   ),
                   const SizedBox(height: 20),

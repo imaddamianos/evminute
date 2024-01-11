@@ -1,7 +1,5 @@
-import 'package:evminute/firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:evminute/screens/splash/splash_screen.dart';
+import 'package:evminute/screens/sign_in/sign_in_screen.dart';
 
 import 'routes.dart';
 import 'theme.dart';
@@ -20,7 +18,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'The Flutter Way - Template',
       theme: AppTheme.lightTheme(context),
-      initialRoute: SplashScreen.routeName,
+      initialRoute: SignInScreen.routeName,
       routes: routes,
     );
   }
