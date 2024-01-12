@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "729418199644-ot7arrq3v6ue2ld7pvsk3643lof1q9sv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.evminute",
+            "certificate_hash": "5b78d6edfa39f09f5e0729de9d5b7d26a9ad31d2"
+          }
+        },
+        {
           "client_id": "729418199644-q1q57dlgprehv004e3f8881tialam2vq.apps.googleusercontent.com",
           "client_type": 3
         }

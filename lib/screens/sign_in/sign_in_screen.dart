@@ -13,6 +13,7 @@ class SignInScreen extends StatelessWidget {
 
   SignInScreen({super.key});
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  // final _firebase = FirebaseAuth.instance;
 
   Future<void> signInWithGoogle(context) async {
     try {
@@ -24,10 +25,7 @@ class SignInScreen extends StatelessWidget {
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
-      debugPrint(credential.accessToken.toString());
-      debugPrint(credential.idToken.toString());
       Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-      debugPrint(credential as String?);
       // Use the credential to sign in with Firebase or your preferred authentication system
     } catch (e) {
       // Handle errors
@@ -38,9 +36,6 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Sign In"),
-      ),
       body: SafeArea(
         child: SizedBox(
           width: double.infinity,
