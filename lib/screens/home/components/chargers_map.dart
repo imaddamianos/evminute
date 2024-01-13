@@ -13,17 +13,17 @@ class MapSampleState extends State<MapSample> {
   final Completer<GoogleMapController> _controller = Completer();
 
   static const CameraPosition _initialPosition = CameraPosition(
-    target: LatLng(37.7749, -122.4194),
+    target: LatLng(33.8836224, -35.5548414),
     zoom: 10,
   );
 
-  final Set<Marker> _markers = Set<Marker>();
+  final Set<Marker> _markers = <Marker>{};
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Customized Map'),
+        title: const Text('Chargers Map'),
       ),
       body: GoogleMap(
         mapType: MapType.normal,
@@ -33,13 +33,13 @@ class MapSampleState extends State<MapSample> {
           _controller.complete(controller);
           // Add your customized markers
           _addMarker(
-            const LatLng(37.7749, -122.4194),
+            const LatLng(33.8837062, 35.5583195),
             'Marker 1',
             'Description for Marker 1',
             'assets/marker_icon.png', // Replace with your image asset
           );
           _addMarker(
-            const LatLng(37.7892, -122.4070),
+            const LatLng(33.8827062, 35.5593195),
             'Marker 2',
             'Description for Marker 2',
             'assets/marker_icon.png', // Replace with your image asset
