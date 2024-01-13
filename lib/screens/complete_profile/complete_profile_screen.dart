@@ -13,27 +13,28 @@ class CompleteProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Sign Up'),
       ),
-      body: SafeArea(
+      body: const SafeArea(
         child: SizedBox(
           width: double.infinity,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const SizedBox(height: 16),
-                  const Text("Complete Profile", style: headingStyle),
-                  const Text(
+                  SizedBox(height: 16),
+                  Text("Complete Profile", style: headingStyle),
+                  Text(
                     "Complete your details or continue  \nwith social media",
                     textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white),
                   ),
-                  const SizedBox(height: 16),
-                  const CompleteProfileForm(),
-                  const SizedBox(height: 30),
+                  SizedBox(height: 16),
+                  CompleteProfileForm(),
+                  SizedBox(height: 30),
                   Text(
                     "By continuing your confirm that you agree \nwith our Term and Condition",
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: TextStyle(color: Colors.white),
                   ),
                 ],
               ),

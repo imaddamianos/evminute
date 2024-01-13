@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import '../../constants.dart';
 import '../sign_in/sign_in_screen.dart';
 import 'components/splash_content.dart';
-import 'package:evminute/firebase_options.dart';
 
 class SplashScreen extends StatefulWidget {
   static String routeName = "/splash";
@@ -33,24 +31,6 @@ class _SplashScreenState extends State<SplashScreen> {
     // },
   ];
   @override
-  void initState() {
-    super.initState();
-    initializeFirebase();
-  }
-
-  Future<void> initializeFirebase() async {
-    try {
-      FirebaseOptions options = DefaultFirebaseOptions.currentPlatform;
-// Modify options as needed
-      await Firebase.initializeApp(options: options);
-
-      setState(() {}); // Trigger a rebuild if needed
-    } catch (e) {
-      // Handle errors
-      debugPrint(e.toString());
-    }
-  }
-
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(

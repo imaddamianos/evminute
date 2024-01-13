@@ -6,7 +6,7 @@ import '../../components/socal_card.dart';
 import 'components/sign_form.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:evminute/screens/sign_in/components/sign_form.dart';
-import 'package:evminute/screens/login_success/login_success_screen.dart';
+import 'package:evminute/screens/complete_profile/complete_profile_screen.dart';
 
 class SignInScreen extends StatelessWidget {
   static String routeName = "/sign_in";
@@ -25,7 +25,7 @@ class SignInScreen extends StatelessWidget {
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
-      Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+      Navigator.pushNamed(context, CompleteProfileScreen.routeName);
       // Use the credential to sign in with Firebase or your preferred authentication system
     } catch (e) {
       // Handle errors

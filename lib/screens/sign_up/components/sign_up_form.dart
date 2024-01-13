@@ -1,9 +1,15 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: use_build_context_synchronously
 
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../../../components/custom_surfix_icon.dart';
 import '../../../components/form_error.dart';
 import '../../../constants.dart';
 import '../../complete_profile/complete_profile_screen.dart';
+import 'package:evminute/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+final _firebase = FirebaseAuth.instance;
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -33,6 +39,24 @@ class _SignUpFormState extends State<SignUpForm> {
       setState(() {
         errors.remove(error);
       });
+    }
+  }
+
+  void initState() {
+    super.initState();
+    initializeFirebase();
+  }
+
+  Future<void> initializeFirebase() async {
+    try {
+      FirebaseOptions options = DefaultFirebaseOptions.currentPlatform;
+// Modify options as needed
+      await Firebase.initializeApp(options: options);
+
+      setState(() {}); // Trigger a rebuild if needed
+    } catch (e) {
+      // Handle errors
+      debugPrint(e.toString());
     }
   }
 
@@ -143,11 +167,22 @@ class _SignUpFormState extends State<SignUpForm> {
           FormError(errors: errors),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+
+                try {
+                  await _firebase.createUserWithEmailAndPassword(
+                    email: email!,
+                    password: password!,
+                  );
+
+                  Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                } catch (e) {
+                  // Handle any errors that occurred during user creation
+                  debugPrint("Error creating user: $e");
+                  // You can add error handling UI or display a snackbar here
+                }
               }
             },
             child: const Text("Continue"),
