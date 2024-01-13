@@ -1,11 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import '../../../components/custom_surfix_icon.dart';
 import '../../../components/form_error.dart';
 import '../../../constants.dart';
 import '../../../helper/keyboard.dart';
 import '../../forgot_password/forgot_password_screen.dart';
-import '../../login_success/login_success_screen.dart';
+import 'package:evminute/screens/login_success/login_success_screen.dart';
+import 'package:evminute/firebase_options.dart';
+
+final _firebase = FirebaseAuth.instance;
 
 class SignForm extends StatefulWidget {
   const SignForm({super.key});
@@ -34,6 +38,24 @@ class _SignFormState extends State<SignForm> {
       setState(() {
         errors.remove(error);
       });
+    }
+  }
+
+  void initState() {
+    super.initState();
+    initializeFirebase();
+  }
+
+  Future<void> initializeFirebase() async {
+    try {
+      FirebaseOptions options = DefaultFirebaseOptions.currentPlatform;
+// Modify options as needed
+      await Firebase.initializeApp(options: options);
+
+      setState(() {}); // Trigger a rebuild if needed
+    } catch (e) {
+      // Handle errors
+      debugPrint(e.toString());
     }
   }
 
@@ -140,10 +162,23 @@ class _SignFormState extends State<SignForm> {
           FormError(errors: errors),
           const SizedBox(height: 16),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                // if all are valid then go to success screen
+                try {
+                  await _firebase.signInWithEmailAndPassword(
+                    email: email!,
+                    password: password!,
+                  );
+
+                  // ignore: use_build_context_synchronously
+                  Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                } catch (e) {
+                  // Handle any errors that occurred during sign-in
+                  debugPrint("Error signing in: $e");
+                  // You can add error handling UI or display a snackbar here
+                }
+                // ignore: use_build_context_synchronously
                 KeyboardUtil.hideKeyboard(context);
               }
             },
