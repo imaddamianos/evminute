@@ -1,11 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import '../../components/no_account_text.dart';
 import '../../components/socal_card.dart';
 import 'components/sign_form.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:evminute/screens/sign_in/components/sign_form.dart';
 import 'package:evminute/screens/complete_profile/complete_profile_screen.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -13,7 +11,6 @@ class SignInScreen extends StatelessWidget {
 
   SignInScreen({super.key});
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-  // final _firebase = FirebaseAuth.instance;
 
   Future<void> signInWithGoogle(context) async {
     try {

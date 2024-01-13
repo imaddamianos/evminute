@@ -1,3 +1,4 @@
+import 'package:evminute/helper/secure_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,7 +9,9 @@ import '../../../helper/keyboard.dart';
 import '../../forgot_password/forgot_password_screen.dart';
 import 'package:evminute/screens/login_success/login_success_screen.dart';
 import 'package:evminute/firebase_options.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+final _secureStorage = SecureStorage();
 final _firebase = FirebaseAuth.instance;
 
 class SignForm extends StatefulWidget {
@@ -41,9 +44,24 @@ class _SignFormState extends State<SignForm> {
     }
   }
 
+  @override
   void initState() {
     super.initState();
     initializeFirebase();
+    loadSavedCredentials();
+  }
+
+  Future<void> loadSavedCredentials() async {
+    final savedEmail = await _secureStorage.getEmail();
+    final savedPassword = await _secureStorage.getPassword();
+
+    if (savedEmail != null && savedPassword != null) {
+      setState(() {
+        email = savedEmail;
+        password = savedPassword;
+        remember = true;
+      });
+    }
   }
 
   Future<void> initializeFirebase() async {
@@ -58,6 +76,13 @@ class _SignFormState extends State<SignForm> {
       debugPrint(e.toString());
     }
   }
+
+  // Future<void> saveCredentialsToSharedPreferences(
+  //     String email, String password) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.setString('email', email);
+  //   prefs.setString('password', password);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -86,13 +111,15 @@ class _SignFormState extends State<SignForm> {
               }
               return null;
             },
+            controller: TextEditingController(
+                text: email), // Set the controller with the saved email
             decoration: const InputDecoration(
               labelText: "Email",
               hintText: "Enter your email",
               hintStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
               labelStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
-              // If  you are using latest version of flutter then lable text and hint text shown like this
-              // if you r using flutter less then 1.20.* then maybe this is not working properly
+              // If  you are using the latest version of flutter, then lable text and hint text shown like this
+              // if you are using flutter less than 1.20.*, then maybe this is not working properly
               floatingLabelBehavior: FloatingLabelBehavior.always,
               suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
             ),
@@ -119,13 +146,15 @@ class _SignFormState extends State<SignForm> {
               }
               return null;
             },
+            controller: TextEditingController(
+                text: password), // Set the controller with the saved password
             decoration: const InputDecoration(
               labelText: "Password",
               hintText: "Enter your password",
               hintStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
               labelStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
-              // If  you are using latest version of flutter then lable text and hint text shown like this
-              // if you r using flutter less then 1.20.* then maybe this is not working properly
+              // If  you are using the latest version of flutter then lable text and hint text shown like this
+              // if you are using flutter less than 1.20.*, then maybe this is not working properly
               floatingLabelBehavior: FloatingLabelBehavior.always,
               suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
             ),
@@ -139,6 +168,13 @@ class _SignFormState extends State<SignForm> {
                 onChanged: (value) {
                   setState(() {
                     remember = value;
+                    // If "Remember me" is checked, save email and password
+                    if (remember!) {
+                      _secureStorage.saveEmailAndPassword(email, password);
+                    } else {
+                      // If "Remember me" is unchecked, clear saved email and password
+                      _secureStorage.clearEmailAndPassword();
+                    }
                   });
                 },
               ),
@@ -171,14 +207,15 @@ class _SignFormState extends State<SignForm> {
                     password: password!,
                   );
 
-                  // ignore: use_build_context_synchronously
+                  _secureStorage.saveEmailAndPassword(email, password);
+
                   Navigator.pushNamed(context, LoginSuccessScreen.routeName);
                 } catch (e) {
                   // Handle any errors that occurred during sign-in
                   debugPrint("Error signing in: $e");
                   // You can add error handling UI or display a snackbar here
                 }
-                // ignore: use_build_context_synchronously
+
                 KeyboardUtil.hideKeyboard(context);
               }
             },
