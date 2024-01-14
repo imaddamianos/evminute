@@ -160,7 +160,7 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
   google_maps_flutter_ios: d1318b4ff711612cab16862d7a87e31a7403d458
-  google_sign_in_ios: ede92ec558c3a73ec07cb180f31820152fb8ca89
+  google_sign_in_ios: 1bfaf6607b44cd1b24c4d4bc39719870440f9ce1
   GoogleMaps: 20d7b12be49a14287f797e88e0e31bc4156aaeb4
   GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34

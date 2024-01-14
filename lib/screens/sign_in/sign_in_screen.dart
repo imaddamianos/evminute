@@ -1,3 +1,4 @@
+import 'package:evminute/screens/login_success/login_success_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../components/no_account_text.dart';
@@ -22,7 +23,7 @@ class SignInScreen extends StatelessWidget {
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
-      Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+      Navigator.pushNamed(context, LoginSuccessScreen.routeName);
       // Use the credential to sign in with Firebase or your preferred authentication system
     } catch (e) {
       // Handle errors
