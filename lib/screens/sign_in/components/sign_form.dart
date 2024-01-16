@@ -9,7 +9,6 @@ import '../../../helper/keyboard.dart';
 import '../../forgot_password/forgot_password_screen.dart';
 import 'package:evminute/screens/login_success/login_success_screen.dart';
 import 'package:evminute/firebase_options.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final _secureStorage = SecureStorage();
 final _firebase = FirebaseAuth.instance;
@@ -76,13 +75,6 @@ class _SignFormState extends State<SignForm> {
       debugPrint(e.toString());
     }
   }
-
-  // Future<void> saveCredentialsToSharedPreferences(
-  //     String email, String password) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setString('email', email);
-  //   prefs.setString('password', password);
-  // }
 
   @override
   Widget build(BuildContext context) {

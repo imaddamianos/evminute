@@ -9,7 +9,7 @@
 	<key>ANDROID_CLIENT_ID</key>
 	<string>729418199644-ekksb15a6pesnjed2clip6uakp6sle4r.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDXO3KJ9Fdadkds6TH98ooU0YIEzVWvJRQ</string>
+	<string>AIzaSyCcolxqu3lGfKdT9DyZg2LigbmKefRlFbc</string>
 	<key>GCM_SENDER_ID</key>
 	<string>729418199644</string>
 	<key>PLIST_VERSION</key>
@@ -21,15 +21,15 @@
 	<key>STORAGE_BUCKET</key>
 	<string>evminute-519e3.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:729418199644:ios:9a24415bf9bf46d40b6c99</string>
 </dict>

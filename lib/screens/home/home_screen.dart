@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'components/categories.dart';
 import 'components/discount_banner.dart';
 import 'components/home_header.dart';
 import 'components/popular_product.dart';

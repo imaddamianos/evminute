@@ -5,7 +5,6 @@ import '../../components/no_account_text.dart';
 import '../../components/socal_card.dart';
 import 'components/sign_form.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:evminute/screens/complete_profile/complete_profile_screen.dart';
 
 class SignInScreen extends StatelessWidget {
   static String routeName = "/sign_in";
