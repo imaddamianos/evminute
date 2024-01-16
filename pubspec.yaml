@@ -45,6 +45,7 @@ dependencies:
   location: ^5.0.3
   flutter_secure_storage: ^9.0.0
   shared_preferences: ^2.2.2
+  firebase_dynamic_links: ^5.4.8
 
 dev_dependencies:
   flutter_test:

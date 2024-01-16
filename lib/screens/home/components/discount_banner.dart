@@ -34,9 +34,9 @@ class DiscountBanner extends StatelessWidget {
           TextSpan(
             style: TextStyle(color: Colors.white),
             children: [
-              TextSpan(text: "Explore the world\n"),
+              TextSpan(text: "Explore and Find\n"),
               TextSpan(
-                text: "of Electric Cars",
+                text: "EV Chargers",
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
