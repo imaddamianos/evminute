@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:flutter_3d_obj/flutter_3d_obj.dart';
 
 class MapSample extends StatefulWidget {
   const MapSample({Key? key}) : super(key: key);
@@ -27,11 +28,16 @@ class MapSampleState extends State<MapSample> {
       'EV Charger AC 22kwh',
       'assets/images/evChargerPoint.png',
     );
-
     await _addMarker(
-      const LatLng(33.8827062, 35.5593195),
+      const LatLng(33.9322844, 35.5884273),
       'Solaris',
       'EV fast chargers',
+      'assets/images/evChargerPoint.png',
+    );
+    await _addMarker(
+      const LatLng(33.9042313, 35.498526),
+      'Le Yacht Club',
+      'Fast Charger 100% charge in 3-4 hours Type 2',
       'assets/images/evChargerPoint.png',
     );
   }

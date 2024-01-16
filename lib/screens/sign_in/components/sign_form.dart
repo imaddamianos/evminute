@@ -9,6 +9,7 @@ import '../../../helper/keyboard.dart';
 import '../../forgot_password/forgot_password_screen.dart';
 import 'package:evminute/screens/login_success/login_success_screen.dart';
 import 'package:evminute/firebase_options.dart';
+import 'package:evminute/helper/loader.dart';
 
 final _secureStorage = SecureStorage();
 final _firebase = FirebaseAuth.instance;
@@ -21,6 +22,7 @@ class SignForm extends StatefulWidget {
 }
 
 class _SignFormState extends State<SignForm> {
+  final GlobalLoader _globalLoader = GlobalLoader();
   final _formKey = GlobalKey<FormState>();
   String? email;
   String? password;
@@ -191,6 +193,7 @@ class _SignFormState extends State<SignForm> {
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () async {
+              _globalLoader.showLoader(context);
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 try {
@@ -207,7 +210,7 @@ class _SignFormState extends State<SignForm> {
                   debugPrint("Error signing in: $e");
                   // You can add error handling UI or display a snackbar here
                 }
-
+                _globalLoader.hideLoader();
                 KeyboardUtil.hideKeyboard(context);
               }
             },
