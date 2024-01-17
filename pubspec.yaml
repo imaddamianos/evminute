@@ -47,6 +47,7 @@ dependencies:
   shared_preferences: ^2.2.2
   firebase_dynamic_links: ^5.4.8
   geolocator: ^10.1.0
+  firebase_database: ^10.4.0
 
 dev_dependencies:
   flutter_test:

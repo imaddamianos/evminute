@@ -1,4 +1,3 @@
-import 'package:evminute/screens/complete_profile/complete_profile_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -15,8 +14,7 @@ class NoAccountText extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
-          onTap: () =>
-              Navigator.pushNamed(context, CompleteProfileScreen.routeName),
+          onTap: () => Navigator.pushNamed(context, SignUpScreen.routeName),
           child: const Text(
             "Sign Up ",
             style: TextStyle(fontSize: 16, color: kPrimaryColor),

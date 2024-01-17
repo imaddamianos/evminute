@@ -1,3 +1,4 @@
+import 'package:evminute/screens/login_success/login_success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -7,9 +8,10 @@ import '../../../constants.dart';
 import '../../otp/otp_screen.dart';
 import 'package:evminute/helper/location_helper.dart';
 import 'package:evminute/helper/google_map_widget.dart';
+import 'package:evminute/firebaseCalls/firebase_operations.dart';
 
 class CompleteProfileForm extends StatefulWidget {
-  const CompleteProfileForm({super.key});
+  const CompleteProfileForm({Key? key}) : super(key: key);
 
   @override
   _CompleteProfileFormState createState() => _CompleteProfileFormState();
@@ -18,9 +20,9 @@ class CompleteProfileForm extends StatefulWidget {
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
   final _formKey = GlobalKey<FormState>();
   final List<String?> errors = [];
-  String? firstName;
-  String? lastName;
-  String? phoneNumber;
+  String? firstNametxt;
+  String? lastNametxt;
+  String? phoneNumbertxt;
   String? address;
   LatLng? userLocation;
 
@@ -52,6 +54,30 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     }
   }
 
+  Future<void> _sendUserDataToFirebase() async {
+    if (_formKey.currentState!.validate()) {
+      if (firstNametxt != null &&
+          lastNametxt != null &&
+          phoneNumbertxt != null) {
+        FirebaseOperations firebaseOperations = FirebaseOperations();
+
+        await firebaseOperations.sendUserData(
+          email: 'user@email.com', // Replace with the actual email
+          firstName: firstNametxt!,
+          lastName: lastNametxt!,
+          phoneNumber: phoneNumbertxt!,
+          latitude: userLocation?.latitude,
+          longitude: userLocation?.longitude,
+        );
+
+        Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+      } else {
+        // Handle the case where one of the required fields is null
+        print("Error: One or more required fields are null");
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -59,12 +85,11 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       child: Column(
         children: [
           TextFormField(
-            onSaved: (newValue) => firstName = newValue,
+            onSaved: (newValue) => firstNametxt = newValue,
             onChanged: (value) {
-              if (value.isNotEmpty) {
-                removeError(error: kNamelNullError);
-              }
-              return;
+              setState(() {
+                firstNametxt = value;
+              });
             },
             validator: (value) {
               if (value!.isEmpty) {
@@ -84,7 +109,19 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           ),
           const SizedBox(height: 20),
           TextFormField(
-            onSaved: (newValue) => lastName = newValue,
+            onSaved: (newValue) => lastNametxt = newValue,
+            onChanged: (value) {
+              setState(() {
+                lastNametxt = value;
+              });
+            },
+            validator: (value) {
+              if (value!.isEmpty) {
+                addError(error: kLastNamelNullError);
+                return "";
+              }
+              return null;
+            },
             decoration: const InputDecoration(
               labelText: "Last Name",
               hintText: "Enter your last name",
@@ -97,12 +134,11 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           const SizedBox(height: 20),
           TextFormField(
             keyboardType: TextInputType.phone,
-            onSaved: (newValue) => phoneNumber = newValue,
+            onSaved: (newValue) => phoneNumbertxt = newValue,
             onChanged: (value) {
-              if (value.isNotEmpty) {
-                removeError(error: kPhoneNumberNullError);
-              }
-              return;
+              setState(() {
+                phoneNumbertxt = value;
+              });
             },
             validator: (value) {
               if (value!.isEmpty) {
@@ -121,12 +157,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             ),
           ),
           const SizedBox(height: 20),
-          // ElevatedButton(
-          //   onPressed: _getUserLocation,
-          //   child: const Text("Get My Location"),
-          // ),
           FormError(errors: errors),
-          // if (userLocation != null)
           ElevatedButton(
             onPressed: () {
               if (userLocation != null) {
@@ -144,12 +175,11 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             child:
                 Text(userLocation != null ? "Show on Map" : "Get My Location"),
           ),
-
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                Navigator.pushNamed(context, OtpScreen.routeName);
+                await _sendUserDataToFirebase();
               }
             },
             child: const Text("Continue"),

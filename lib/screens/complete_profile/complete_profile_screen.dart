@@ -21,9 +21,9 @@ class CompleteProfileScreen extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(height: 16),
-                  Text("Complete Profile", style: headingStyle),
+                  Text("Profile", style: headingStyle),
                   Text(
-                    "Complete your details or continue  \nwith social media",
+                    "Complete your details",
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.white),
                   ),
