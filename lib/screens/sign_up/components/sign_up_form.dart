@@ -8,6 +8,7 @@ import '../../../constants.dart';
 import '../../complete_profile/complete_profile_screen.dart';
 import 'package:evminute/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:evminute/helper/loader.dart';
 
 final _firebase = FirebaseAuth.instance;
 
@@ -25,6 +26,7 @@ class _SignUpFormState extends State<SignUpForm> {
   String? conform_password;
   bool remember = false;
   final List<String?> errors = [];
+  final GlobalLoader _globalLoader = GlobalLoader();
 
   void addError({String? error}) {
     if (!errors.contains(error)) {
@@ -168,6 +170,7 @@ class _SignUpFormState extends State<SignUpForm> {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () async {
+              _globalLoader.showLoader(context);
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
 
@@ -177,12 +180,17 @@ class _SignUpFormState extends State<SignUpForm> {
                     password: password!,
                   );
 
-                  Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                  Navigator.pushNamed(
+                    context,
+                    CompleteProfileScreen.routeName,
+                    arguments: email,
+                  );
                 } catch (e) {
                   // Handle any errors that occurred during user creation
                   debugPrint("Error creating user: $e");
                   // You can add error handling UI or display a snackbar here
                 }
+                _globalLoader.hideLoader();
               }
             },
             child: const Text("Continue"),

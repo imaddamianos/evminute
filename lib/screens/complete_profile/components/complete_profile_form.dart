@@ -5,14 +5,13 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../components/custom_surfix_icon.dart';
 import '../../../components/form_error.dart';
 import '../../../constants.dart';
-import '../../otp/otp_screen.dart';
 import 'package:evminute/helper/location_helper.dart';
 import 'package:evminute/helper/google_map_widget.dart';
 import 'package:evminute/firebaseCalls/firebase_operations.dart';
+import 'package:evminute/helper/loader.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   const CompleteProfileForm({Key? key}) : super(key: key);
-
   @override
   _CompleteProfileFormState createState() => _CompleteProfileFormState();
 }
@@ -25,6 +24,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   String? phoneNumbertxt;
   String? address;
   LatLng? userLocation;
+  final GlobalLoader _globalLoader = GlobalLoader();
 
   void addError({String? error}) {
     if (!errors.contains(error)) {
@@ -62,7 +62,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         FirebaseOperations firebaseOperations = FirebaseOperations();
 
         await firebaseOperations.sendUserData(
-          email: 'user@email.com', // Replace with the actual email
+          email: 'email',
           firstName: firstNametxt!,
           lastName: lastNametxt!,
           phoneNumber: phoneNumbertxt!,
@@ -160,6 +160,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           FormError(errors: errors),
           ElevatedButton(
             onPressed: () {
+              _globalLoader.showLoader(context);
               if (userLocation != null) {
                 Navigator.push(
                   context,
@@ -170,6 +171,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                 );
               } else {
                 _getUserLocation();
+                _globalLoader.hideLoader();
               }
             },
             child:
@@ -178,9 +180,11 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () async {
+              _globalLoader.showLoader(context);
               if (_formKey.currentState!.validate()) {
                 await _sendUserDataToFirebase();
               }
+              _globalLoader.hideLoader();
             },
             child: const Text("Continue"),
           ),

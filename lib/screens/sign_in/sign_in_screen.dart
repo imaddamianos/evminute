@@ -29,7 +29,7 @@ class SignInScreen extends StatelessWidget {
           await FirebaseAuth.instance.signInWithCredential(credential);
       final user = authResult.user;
 
-      // Fetch additional user details like display name
+      // Fetch additional user details likfshowe display name
       if (user != null) {
         await user.reload(); // Reload user to get updated data
         await user.getIdToken();
