@@ -34,9 +34,18 @@ class LoginSuccessScreen extends StatelessWidget {
             ),
           ),
           // Display the user's email if available
-          if (user != null)
+          // if (user != null && user.email != null)
+          //   Text(
+          //     "Email: ${user.email}",
+          //     style: const TextStyle(
+          //       fontSize: 18,
+          //       color: Color.fromARGB(255, 184, 184, 183),
+          //     ),
+          //   ),
+          // Display the user's name if available
+          if (user != null && user.displayName != null)
             Text(
-              "${user.email}",
+              "Welcome ${user.displayName}",
               style: const TextStyle(
                 fontSize: 18,
                 color: Color.fromARGB(255, 184, 184, 183),

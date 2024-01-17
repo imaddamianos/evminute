@@ -1,3 +1,4 @@
+import 'package:evminute/models/UserModel.dart';
 import 'package:evminute/screens/login_success/login_success_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  Future<void> signInWithGoogle(context) async {
+  Future<void> signInWithGoogle(BuildContext context) async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       final GoogleSignInAuthentication? googleAuth =
@@ -22,8 +23,20 @@ class SignInScreen extends StatelessWidget {
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
-      Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-      // Use the credential to sign in with Firebase or your preferred authentication system
+
+      // Sign in with Google using Firebase
+      final authResult =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      final user = authResult.user;
+
+      // Fetch additional user details like display name
+      if (user != null) {
+        await user.reload(); // Reload user to get updated data
+        await user.getIdToken();
+        user.displayName;
+
+        Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+      }
     } catch (e) {
       // Handle errors
       debugPrint(e.toString());
