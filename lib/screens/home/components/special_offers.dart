@@ -26,27 +26,27 @@ class SpecialOffers extends StatelessWidget {
               SpecialOfferCard(
                 image: "assets/images/Image Banner 2.png",
                 category: "EVMINUTE",
-                numOfBrands: 18,
+                numOfBrands: 1,
                 press: () {
                   Navigator.pushNamed(context, ProductsScreen.routeName);
                 },
               ),
-              SpecialOfferCard(
-                image: "assets/images/Image Banner 2.png",
-                category: "Motion Motors",
-                numOfBrands: 18,
-                press: () {
-                  Navigator.pushNamed(context, ProductsScreen.routeName);
-                },
-              ),
-              SpecialOfferCard(
-                image: "assets/images/Image Banner 3.png",
-                category: "Solaris",
-                numOfBrands: 24,
-                press: () {
-                  Navigator.pushNamed(context, ProductsScreen.routeName);
-                },
-              ),
+              // SpecialOfferCard(
+              //   image: "assets/images/Image Banner 2.png",
+              //   category: "Motion Motors",
+              //   numOfBrands: 18,
+              //   press: () {
+              //     Navigator.pushNamed(context, ProductsScreen.routeName);
+              //   },
+              // ),
+              // SpecialOfferCard(
+              //   image: "assets/images/Image Banner 3.png",
+              //   category: "Solaris",
+              //   numOfBrands: 24,
+              //   press: () {
+              //     Navigator.pushNamed(context, ProductsScreen.routeName);
+              //   },
+              // ),
               const SizedBox(width: 20),
             ],
           ),

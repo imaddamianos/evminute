@@ -54,29 +54,29 @@ class ProductCard extends StatelessWidget {
                     color: kPrimaryColor,
                   ),
                 ),
-                InkWell(
-                  borderRadius: BorderRadius.circular(50),
-                  onTap: () {},
-                  child: Container(
-                    padding: const EdgeInsets.all(6),
-                    height: 24,
-                    width: 24,
-                    decoration: BoxDecoration(
-                      color: product.isFavourite
-                          ? kPrimaryColor.withOpacity(0.15)
-                          : kSecondaryColor.withOpacity(0.1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: SvgPicture.asset(
-                      "assets/icons/Heart Icon_2.svg",
-                      colorFilter: ColorFilter.mode(
-                          product.isFavourite
-                              ? const Color(0xFFFF4848)
-                              : const Color(0xFFDBDEE4),
-                          BlendMode.srcIn),
-                    ),
-                  ),
-                ),
+                // InkWell(
+                //   borderRadius: BorderRadius.circular(50),
+                //   onTap: () {},
+                //   child: Container(
+                //     padding: const EdgeInsets.all(6),
+                //     height: 24,
+                //     width: 24,
+                //     decoration: BoxDecoration(
+                //       color: product.isFavourite
+                //           ? kPrimaryColor.withOpacity(0.15)
+                //           : kSecondaryColor.withOpacity(0.1),
+                //       shape: BoxShape.circle,
+                //     ),
+                //     child: SvgPicture.asset(
+                //       "assets/icons/Heart Icon_2.svg",
+                //       colorFilter: ColorFilter.mode(
+                //           product.isFavourite
+                //               ? const Color(0xFFFF4848)
+                //               : const Color(0xFFDBDEE4),
+                //           BlendMode.srcIn),
+                //     ),
+                //   ),
+                // ),
               ],
             )
           ],
