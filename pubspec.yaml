@@ -48,6 +48,8 @@ dependencies:
   firebase_dynamic_links: ^5.4.8
   geolocator: ^10.1.0
   firebase_database: ^10.4.0
+  image_picker: ^1.0.7
+  firebase_storage: ^11.6.0
 
 dev_dependencies:
   flutter_test:
