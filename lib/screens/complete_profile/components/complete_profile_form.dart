@@ -9,6 +9,9 @@ import 'package:evminute/helper/location_helper.dart';
 import 'package:evminute/helper/google_map_widget.dart';
 import 'package:evminute/firebaseCalls/firebase_operations.dart';
 import 'package:evminute/helper/loader.dart';
+import 'package:evminute/helper/secure_storage.dart';
+
+final _secureStorage = SecureStorage();
 
 class CompleteProfileForm extends StatefulWidget {
   const CompleteProfileForm({Key? key}) : super(key: key);
@@ -55,6 +58,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   }
 
   Future<void> _sendUserDataToFirebase() async {
+    String? savedEmail = await _secureStorage.getEmail();
+
     if (_formKey.currentState!.validate()) {
       if (firstNametxt != null &&
           lastNametxt != null &&
@@ -62,7 +67,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         FirebaseOperations firebaseOperations = FirebaseOperations();
 
         await firebaseOperations.sendUserData(
-          email: 'email',
+          email: savedEmail!,
           firstName: firstNametxt!,
           lastName: lastNametxt!,
           phoneNumber: phoneNumbertxt!,
