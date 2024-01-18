@@ -35,6 +35,7 @@ class SignInScreen extends StatelessWidget {
         await user.getIdToken();
         user.displayName;
 
+        // ignore: use_build_context_synchronously
         Navigator.pushNamed(context, LoginSuccessScreen.routeName);
       }
     } catch (e) {
