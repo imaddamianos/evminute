@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class _UserImagePickersState extends StatefulWidget {
-  const _UserImagePickersState();
-
   @override
-  State<_UserImagePickersState> createState() => _UserImagePickersStateState();
+  State<_UserImagePickersState> createState() => _UserImagePicker();
 }
 
-class _UserImagePickersStateState extends State<_UserImagePickersState> {
+class _UserImagePicker extends State<_UserImagePickersState> {
   // ignore: non_constant_identifier_names
   File? _PickedImageFile;
 

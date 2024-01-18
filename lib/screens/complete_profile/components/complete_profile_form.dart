@@ -64,9 +64,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       if (firstNametxt != null &&
           lastNametxt != null &&
           phoneNumbertxt != null) {
-        FirebaseOperations firebaseOperations = FirebaseOperations();
-
-        await firebaseOperations.sendUserData(
+        await sendUserData(
           email: savedEmail!,
           firstName: firstNametxt!,
           lastName: lastNametxt!,

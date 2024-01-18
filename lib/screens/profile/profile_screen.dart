@@ -1,11 +1,16 @@
 // import 'package:evminute/screens/complete_profile/complete_profile_screen.dart';
 // import 'package:evminute/screens/profile/components/profile_pic.dart';
+import 'dart:io';
+
+import 'package:evminute/screens/complete_profile/complete_profile_screen.dart';
 import 'package:evminute/screens/profile/components/profile_pic.dart';
 import 'package:flutter/material.dart';
 
 import 'components/profile_menu.dart';
 import 'package:evminute/screens/profile/components/user_image.dart';
 import 'package:evminute/screens/sign_in/sign_in_screen.dart';
+
+File? _selectedImage;
 
 class ProfileScreen extends StatelessWidget {
   static String routeName = "/profile";
@@ -21,12 +26,18 @@ class ProfileScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
           children: [
-            const ProfilePic(),
+            ProfilePic(
+              onPickImage: (File pickedImage) {
+                _selectedImage = pickedImage;
+              },
+            ),
             const SizedBox(height: 20),
             ProfileMenu(
               text: "Profile",
               icon: "assets/icons/User Icon.svg",
-              press: () => {},
+              press: () => {
+                Navigator.pushNamed(context, CompleteProfileScreen.routeName),
+              },
             ),
             ProfileMenu(
               text: "Notifications",

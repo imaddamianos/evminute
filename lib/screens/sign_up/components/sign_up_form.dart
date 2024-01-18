@@ -9,8 +9,10 @@ import '../../complete_profile/complete_profile_screen.dart';
 import 'package:evminute/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:evminute/helper/loader.dart';
+import 'package:evminute/helper/secure_storage.dart';
 
 final _firebase = FirebaseAuth.instance;
+final _secureStorage = SecureStorage();
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -175,6 +177,8 @@ class _SignUpFormState extends State<SignUpForm> {
                 _formKey.currentState!.save();
 
                 try {
+                  String? savedEmail = await _secureStorage.getEmail();
+                  _secureStorage.saveEmailAndPassword(savedEmail, password);
                   await _firebase.createUserWithEmailAndPassword(
                     email: email!,
                     password: password!,
