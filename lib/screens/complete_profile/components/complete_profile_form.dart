@@ -68,7 +68,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           lastNametxt != null &&
           phoneNumbertxt != null) {
         await FirebaseOperations().sendUserData(
-          email: savedEmail!,
+          email: savedEmail!.replaceFirst(".", ""),
           firstName: firstNametxt!,
           lastName: lastNametxt!,
           phoneNumber: phoneNumbertxt!,

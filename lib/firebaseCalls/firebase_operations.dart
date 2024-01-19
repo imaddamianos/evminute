@@ -49,10 +49,10 @@ class FirebaseOperations {
 
     await _databaseReference
         .child('users')
-        .child(firstName + lastName)
+        .child(email.replaceFirst(".", ""))
         .set(userData);
 
     // Upload the image to Firebase Storage
-    await uploadImage(email, image!);
+    await uploadImage(email.replaceFirst(".", ""), image!);
   }
 }
