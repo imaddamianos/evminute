@@ -205,9 +205,9 @@ class _SignFormState extends State<SignForm> {
                   _secureStorage.saveEmailAndPassword(email, password);
 
                   Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-                } catch (e) {
+                } on FirebaseAuthException catch (e) {
                   // Handle any errors that occurred during sign-in
-                  debugPrint("Error signing in: $e");
+                  debugPrint("Error signing in: ${e.code}");
                   // You can add error handling UI or display a snackbar here
                 }
                 _globalLoader.hideLoader();
