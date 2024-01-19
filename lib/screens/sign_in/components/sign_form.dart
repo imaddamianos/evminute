@@ -211,6 +211,7 @@ class _SignFormState extends State<SignForm> {
                   // You can add error handling UI or display a snackbar here
                 }
                 _globalLoader.hideLoader();
+                // ignore: use_build_context_synchronously
                 KeyboardUtil.hideKeyboard(context);
               }
             },

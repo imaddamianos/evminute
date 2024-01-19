@@ -20,6 +20,7 @@ class LoginSuccessScreen extends StatelessWidget {
 
         // Retrieve the current user from FirebaseAuth
         User? user = FirebaseAuth.instance.currentUser;
+        _secureStorage.saveEmailOnly(user?.email);
 
         return Scaffold(
           appBar: AppBar(

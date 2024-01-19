@@ -8,6 +8,10 @@ class SecureStorage {
     await _storage.write(key: 'password', value: password ?? '');
   }
 
+  Future<void> saveEmailOnly(String? email) async {
+    await _storage.write(key: 'email', value: email ?? '');
+  }
+
   Future<void> clearEmailAndPassword() async {
     await _storage.delete(key: 'email');
     await _storage.delete(key: 'password');

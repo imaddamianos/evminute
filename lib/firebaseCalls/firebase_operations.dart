@@ -47,7 +47,10 @@ class FirebaseOperations {
       'image': imageUrl,
     };
 
-    await _databaseReference.child('users').push().set(userData);
+    await _databaseReference
+        .child('users')
+        .child(firstName + lastName)
+        .set(userData);
 
     // Upload the image to Firebase Storage
     await uploadImage(email, image!);
