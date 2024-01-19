@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:evminute/screens/init_screen.dart';
+import 'package:evminute/helper/secure_storage.dart';
+
+final _secureStorage = SecureStorage();
 
 class LoginSuccessScreen extends StatelessWidget {
   static String routeName = "/login_success";
@@ -9,61 +12,69 @@ class LoginSuccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Retrieve the current user from FirebaseAuth
-    User? user = FirebaseAuth.instance.currentUser;
+    return FutureBuilder<String?>(
+      // Fetch the saved email from secure storage
+      future: _secureStorage.getEmail(),
+      builder: (context, snapshot) {
+        String? savedEmail = snapshot.data;
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: const SizedBox(),
-        title: const Text("Login Success"),
-      ),
-      body: Column(
-        children: [
-          const SizedBox(height: 16),
-          Image.asset(
-            "assets/images/success.png",
-            height: MediaQuery.of(context).size.height * 0.4, // 40%
+        // Retrieve the current user from FirebaseAuth
+        User? user = FirebaseAuth.instance.currentUser;
+
+        return Scaffold(
+          appBar: AppBar(
+            leading: const SizedBox(),
+            title: const Text("Login Success"),
           ),
-          const SizedBox(height: 16),
-          const Text(
-            "Login Success",
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 184, 184, 183),
-            ),
-          ),
-          // Display the user's email if available
-          // if (user != null && user.email != null)
-          //   Text(
-          //     "Email: ${user.email}",
-          //     style: const TextStyle(
-          //       fontSize: 18,
-          //       color: Color.fromARGB(255, 184, 184, 183),
-          //     ),
-          //   ),
-          // Display the user's name if available
-          if (user != null && user.displayName != null)
-            Text(
-              "Welcome ${user.displayName}",
-              style: const TextStyle(
-                fontSize: 18,
-                color: Color.fromARGB(255, 184, 184, 183),
+          body: Column(
+            children: [
+              const SizedBox(height: 16),
+              Image.asset(
+                "assets/images/success.png",
+                height: MediaQuery.of(context).size.height * 0.4, // 40%
               ),
-            ),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, InitScreen.routeName);
-              },
-              child: const Text("Explore"),
-            ),
+              const SizedBox(height: 16),
+              const Text(
+                "Login Success",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 184, 184, 183),
+                ),
+              ),
+              // Display the saved email if available
+              if (savedEmail != null && savedEmail.isNotEmpty)
+                Text(
+                  savedEmail,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Color.fromARGB(255, 184, 184, 183),
+                  ),
+                ),
+              // Display the user's name if available
+              if (user != null && user.displayName != null)
+                Text(
+                  "Welcome ${user.displayName}",
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Color.fromARGB(255, 184, 184, 183),
+                  ),
+                ),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, InitScreen.routeName);
+                  },
+                  child: const Text("Explore"),
+                ),
+              ),
+              const Spacer(),
+            ],
           ),
-          const Spacer(),
-        ],
-      ),
+        );
+      },
     );
   }
 }

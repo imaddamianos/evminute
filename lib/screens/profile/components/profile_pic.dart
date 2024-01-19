@@ -21,14 +21,16 @@ class _ProfilePicState extends State<ProfilePic> {
 
   Future<void> _pickImage(ImageSource source) async {
     final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: source);
+    final pickedFile = await picker.pickImage(
+      source: source,
+      maxHeight: 150,
+      imageQuality: 50,
+    );
 
     if (pickedFile != null) {
-      // String? savedEmail = await _secureStorage.getEmail();
       setState(() {
         _image = File(pickedFile.path);
-        widget.onPickImage(_image!);
-        sendUserData(image: _image);
+        widget.onPickImage(_image!); // Notify parent widget
       });
     }
   }

@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:evminute/screens/login_success/login_success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
+import 'package:evminute/screens/profile/components/profile_pic.dart';
 import '../../../components/custom_surfix_icon.dart';
 import '../../../components/form_error.dart';
 import '../../../constants.dart';
@@ -12,6 +14,7 @@ import 'package:evminute/helper/loader.dart';
 import 'package:evminute/helper/secure_storage.dart';
 
 final _secureStorage = SecureStorage();
+File? _selectedImage;
 
 class CompleteProfileForm extends StatefulWidget {
   const CompleteProfileForm({Key? key}) : super(key: key);
@@ -64,18 +67,18 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       if (firstNametxt != null &&
           lastNametxt != null &&
           phoneNumbertxt != null) {
-        await sendUserData(
+        await FirebaseOperations().sendUserData(
           email: savedEmail!,
           firstName: firstNametxt!,
           lastName: lastNametxt!,
           phoneNumber: phoneNumbertxt!,
           latitude: userLocation?.latitude,
           longitude: userLocation?.longitude,
+          image: _selectedImage, // Pass the selected image
         );
 
         Navigator.pushNamed(context, LoginSuccessScreen.routeName);
       } else {
-        // Handle the case where one of the required fields is null
         print("Error: One or more required fields are null");
       }
     }
@@ -87,6 +90,11 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       key: _formKey,
       child: Column(
         children: [
+          ProfilePic(
+            onPickImage: (File pickedImage) {
+              _selectedImage = pickedImage;
+            },
+          ),
           TextFormField(
             onSaved: (newValue) => firstNametxt = newValue,
             onChanged: (value) {

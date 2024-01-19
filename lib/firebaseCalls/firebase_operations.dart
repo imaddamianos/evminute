@@ -2,32 +2,39 @@ import 'dart:io';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:evminute/helper/secure_storage.dart';
 
-final _databaseReference = FirebaseDatabase.instance.reference();
-final _storage = FirebaseStorage.instance;
-final _secureStorage = SecureStorage();
+String imageUrl = '';
 
-Future<void> sendUserData({
-  String? email,
-  String? firstName,
-  String? lastName,
-  String? phoneNumber,
-  double? latitude,
-  double? longitude,
-  File? image, // Make the image parameter nullable
-}) async {
-  // Check if the image file is not null before attempting to upload
-  if (image != null) {
-    // Upload the image to Firebase Storage
-    String? savedEmail = await _secureStorage.getEmail();
-    final storageRef = _storage.ref('user_images').child('$savedEmail.jpg');
-    await storageRef.putFile(image);
+class FirebaseOperations {
+  // ignore: deprecated_member_use
+  final _databaseReference = FirebaseDatabase.instance.reference();
+  // final _secureStorage = FirebaseStorage.instance;
 
-    // Get the download URL of the uploaded image
-    final imageUrl = await storageRef.getDownloadURL();
+  Future<String> uploadImage(String user, File selectedImage) async {
+    try {
+      final Reference storageRef =
+          FirebaseStorage.instance.ref().child('user_image').child('$user.jpg');
+      await storageRef.putFile(selectedImage);
 
-    // Prepare user data with the image URL
+      // Get the download URL of the uploaded image
+      imageUrl = await storageRef
+          .getDownloadURL(); // Print the URL to the console for debugging
+
+      return imageUrl;
+    } catch (error) {
+      return 'no image'; // Return an empty string in case of an error
+    }
+  }
+
+  Future<void> sendUserData({
+    required String email,
+    required String firstName,
+    required String lastName,
+    required String phoneNumber,
+    double? latitude,
+    double? longitude,
+    File? image,
+  }) async {
     final userData = {
       'email': email,
       'firstName': firstName,
@@ -37,13 +44,12 @@ Future<void> sendUserData({
         'latitude': latitude,
         'longitude': longitude,
       },
-      'imageUrl': imageUrl,
+      'image': imageUrl,
     };
 
-    // Save user data to the Firebase Realtime Database
     await _databaseReference.child('users').push().set(userData);
-  } else {
-    // Handle the case where the image is null (not provided)
-    print('Image not provided. Skipping upload.');
+
+    // Upload the image to Firebase Storage
+    await uploadImage(email, image!);
   }
 }
