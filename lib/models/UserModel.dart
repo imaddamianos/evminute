@@ -1,14 +1,17 @@
-//usermodel.dart
-
 class UserModel {
-  final String uid;
-  final String displayName;
-  final String email;
+  String email;
+  String firstName;
+  String lastName;
+  String phoneNumber;
+  double? latitude;
+  double? longitude;
 
   UserModel({
-    required this.uid,
-    required this.displayName,
     required this.email,
-    // Add other properties as needed
+    required this.firstName,
+    required this.lastName,
+    required this.phoneNumber,
+    this.latitude,
+    this.longitude,
   });
 }

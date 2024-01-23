@@ -1,5 +1,6 @@
 import 'dart:io';
-
+import 'package:evminute/models/UserModel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -8,6 +9,7 @@ String imageUrl = '';
 class FirebaseOperations {
   // ignore: deprecated_member_use
   final _databaseReference = FirebaseDatabase.instance.reference();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   // final _secureStorage = FirebaseStorage.instance;
 
   Future<String> uploadImage(String user, File selectedImage) async {

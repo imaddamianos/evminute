@@ -1,7 +1,7 @@
 // import 'package:evminute/screens/complete_profile/complete_profile_screen.dart';
 // import 'package:evminute/screens/profile/components/profile_pic.dart';
 
-import 'package:evminute/screens/complete_profile/complete_profile_screen.dart';
+import 'package:evminute/screens/update_profile/update_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'components/profile_menu.dart';
 import 'package:evminute/screens/sign_in/sign_in_screen.dart';
@@ -25,7 +25,7 @@ class ProfileScreen extends StatelessWidget {
               text: "Profile",
               icon: "assets/icons/User Icon.svg",
               press: () => {
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName),
+                Navigator.pushNamed(context, UpdateProfileScreen.routeName),
               },
             ),
             ProfileMenu(

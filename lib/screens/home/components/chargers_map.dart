@@ -13,13 +13,12 @@ class MapSample extends StatefulWidget {
 
 class MapSampleState extends State<MapSample> {
   final Completer<GoogleMapController> _controller = Completer();
+  final Set<Marker> _markers = <Marker>{};
 
   static const CameraPosition _initialPosition = CameraPosition(
     target: LatLng(33.8836224, 35.5548414),
     zoom: 12,
   );
-
-  final Set<Marker> _markers = <Marker>{};
 
   Future<void> _loadMarkers() async {
     await _addMarker(
@@ -43,8 +42,8 @@ class MapSampleState extends State<MapSample> {
   }
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _loadMarkers();
   }
 
@@ -82,8 +81,10 @@ class MapSampleState extends State<MapSample> {
     String snippet,
     String imagePath,
   ) async {
+    double devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+
     final BitmapDescriptor icon = await BitmapDescriptor.fromAssetImage(
-      const ImageConfiguration(devicePixelRatio: 1.0),
+      ImageConfiguration(devicePixelRatio: devicePixelRatio),
       imagePath,
     );
 

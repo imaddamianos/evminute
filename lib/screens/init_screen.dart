@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:evminute/constants.dart';
-import 'package:evminute/screens/favorite/favorite_screen.dart';
+// import 'package:evminute/screens/favorite/favorite_screen.dart';
 import 'package:evminute/screens/home/home_screen.dart';
 import 'package:evminute/screens/profile/profile_screen.dart';
 
