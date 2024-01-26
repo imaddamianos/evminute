@@ -39,6 +39,8 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
   late TextEditingController _firstNameController;
   late TextEditingController _lastNameController;
   late TextEditingController _phoneNumberController;
+  late double _longitude;
+  late double _latitude;
 
   @override
   void initState() {
@@ -49,6 +51,8 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
         TextEditingController(text: widget.userInfo?.lastName);
     _phoneNumberController =
         TextEditingController(text: widget.userInfo?.phoneNumber);
+    _longitude = 33.3;
+    _latitude = 35.4;
 
     // Call FirebaseOperations().getUserInfo() to get updated user info
     _updateUserInfo();
@@ -63,6 +67,8 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
         _firstNameController.text = updatedUserInfo.firstName;
         _lastNameController.text = updatedUserInfo.lastName;
         _phoneNumberController.text = updatedUserInfo.phoneNumber;
+        _longitude = updatedUserInfo.longitude ?? 0.0;
+        _latitude = updatedUserInfo.latitude ?? 0.0;
       });
     }
   }
@@ -94,8 +100,8 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
           firstName: firstNametxt!,
           lastName: lastNametxt!,
           phoneNumber: phoneNumbertxt!,
-          latitude: widget.userInfo?.latitude,
-          longitude: widget.userInfo?.longitude,
+          latitude: _latitude,
+          longitude: _longitude,
           image: _selectedImage,
         );
 
@@ -127,7 +133,6 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
               }
               return null;
             },
-            // ... Remaining code ...
           ),
           const SizedBox(height: 20),
           TextFormField(
@@ -145,7 +150,6 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
               }
               return null;
             },
-            // ... Remaining code ...
           ),
           const SizedBox(height: 20),
           TextFormField(
@@ -164,10 +168,31 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
               }
               return null;
             },
-            // ... Remaining code ...
           ),
           const SizedBox(height: 20),
           FormError(errors: errors),
+          SizedBox(
+            height: 200,
+            child: GoogleMap(
+              initialCameraPosition: const CameraPosition(
+                target: LatLng(
+                  33.883432,
+                  35.513320,
+                ),
+                zoom: 11.0,
+              ),
+              markers: {
+                Marker(
+                  markerId: const MarkerId("userLocation"),
+                  position: LatLng(
+                    _latitude,
+                    _longitude,
+                  ),
+                  infoWindow: const InfoWindow(title: "User Location"),
+                ),
+              },
+            ),
+          ),
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () async {
