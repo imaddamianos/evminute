@@ -1,16 +1,51 @@
 import 'dart:io';
 import 'package:evminute/models/UserModel.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:evminute/helper/secure_storage.dart';
 
+final _secureStorage = SecureStorage();
 String imageUrl = '';
 
 class FirebaseOperations {
   // ignore: deprecated_member_use
   final _databaseReference = FirebaseDatabase.instance.reference();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  // final _secureStorage = FirebaseStorage.instance;
+
+  Future<UserModel?> getUserInfo() async {
+    try {
+      String? savedEmail = await _secureStorage.getEmail();
+      final ref = FirebaseDatabase.instance.ref();
+      final snapshot = await ref
+          .child('users')
+          .child(savedEmail!.replaceFirst(".", ""))
+          .get();
+
+      if (snapshot.exists) {
+        final userData = snapshot.value as Map<dynamic, dynamic>?;
+
+        if (userData != null) {
+          UserModel userInfo = UserModel(
+            email: userData['email'],
+            firstName: userData['firstName'],
+            lastName: userData['lastName'],
+            phoneNumber: userData['phoneNumber'],
+            latitude: userData['userLocation']['latitude'],
+            longitude: userData['userLocation']['longitude'],
+            imageUrl: userData['image'],
+          );
+
+          return userInfo;
+        }
+      } else {
+        print('No data available.');
+        return null;
+      }
+    } catch (error) {
+      print('Error getting user info: $error');
+      return null;
+    }
+    return null;
+  }
 
   Future<String> uploadImage(String user, File selectedImage) async {
     try {

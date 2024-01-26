@@ -94,6 +94,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             onPickImage: (File pickedImage) {
               _selectedImage = pickedImage;
             },
+            imageUrl: '',
           ),
           TextFormField(
             onSaved: (newValue) => firstNametxt = newValue,

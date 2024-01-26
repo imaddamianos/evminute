@@ -3,14 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:evminute/helper/secure_storage.dart';
-import 'package:evminute/firebaseCalls/firebase_operations.dart';
+import 'package:http/http.dart' as http;
 
 final _secureStorage = SecureStorage();
 
 class ProfilePic extends StatefulWidget {
-  const ProfilePic({Key? key, required this.onPickImage});
+  const ProfilePic({
+    Key? key,
+    required this.onPickImage,
+    required this.imageUrl,
+  });
 
   final void Function(File pickedImage) onPickImage;
+  final String imageUrl;
 
   @override
   _ProfilePicState createState() => _ProfilePicState();
@@ -19,24 +24,53 @@ class ProfilePic extends StatefulWidget {
 class _ProfilePicState extends State<ProfilePic> {
   File? _image;
 
-  Future<void> _pickImage(ImageSource source) async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
-      source: source,
-      maxHeight: 150,
-      imageQuality: 50,
-    );
+  @override
+  void initState() {
+    super.initState();
+    // Load the image if an imageUrl is provided
+    if (widget.imageUrl.isNotEmpty) {
+      _loadImageFromUrl(widget.imageUrl);
+    }
+  }
 
-    if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-        widget.onPickImage(_image!); // Notify parent widget
-      });
+  Future<void> _pickImage(ImageSource source) async {
+    try {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(
+        source: source,
+        maxHeight: 150,
+        imageQuality: 50,
+      );
+
+      if (pickedFile != null) {
+        setState(() {
+          _image = File(pickedFile.path);
+          widget.onPickImage(_image!); // Notify parent widget
+        });
+      }
+    } catch (error) {
+      print('Error picking image: $error');
+      // Handle error (show a message, log, etc.)
+    }
+  }
+
+  Future<void> _loadImageFromUrl(String imageUrl) async {
+    try {
+      final response = await http.get(Uri.parse(imageUrl));
+      if (response.statusCode == 200) {
+        final bytes = response.bodyBytes;
+        setState(() {
+          _image = File.fromRawPath(bytes);
+        });
+      }
+    } catch (error) {
+      print('Error loading image from URL: $error');
+      // Handle error (show a message, log, etc.)
     }
   }
 
   Future<void> _showImageSourceDialog() async {
-    return showDialog(
+    showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -44,31 +78,38 @@ class _ProfilePicState extends State<ProfilePic> {
           content: SingleChildScrollView(
             child: ListBody(
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                    _pickImage(ImageSource.gallery);
-                  },
-                  child: const ListTile(
-                    leading: Icon(Icons.photo_library),
-                    title: Text("Gallery"),
-                  ),
+                _buildImageSourceOption(
+                  icon: Icons.photo_library,
+                  title: "Gallery",
+                  source: ImageSource.gallery,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                    _pickImage(ImageSource.camera);
-                  },
-                  child: const ListTile(
-                    leading: Icon(Icons.camera_alt),
-                    title: Text("Camera"),
-                  ),
+                _buildImageSourceOption(
+                  icon: Icons.camera_alt,
+                  title: "Camera",
+                  source: ImageSource.camera,
                 ),
               ],
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget _buildImageSourceOption({
+    required IconData icon,
+    required String title,
+    required ImageSource source,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pop(context);
+        _pickImage(source);
+      },
+      child: ListTile(
+        leading: Icon(icon),
+        title: Text(title),
+      ),
     );
   }
 
