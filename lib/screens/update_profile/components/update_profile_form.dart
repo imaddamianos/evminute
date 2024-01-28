@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:evminute/screens/login_success/login_success_screen.dart';
+import 'package:evminute/screens/profile/components/profile_pic.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../components/custom_surfix_icon.dart';
@@ -118,6 +119,13 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
       key: _formKey,
       child: Column(
         children: [
+          ProfilePic(
+            onPickImage: (File pickedImage) {
+              _selectedImage = pickedImage;
+            },
+            imageUrl: '',
+          ),
+          const SizedBox(height: 20),
           TextFormField(
             controller: _firstNameController,
             onSaved: (newValue) => firstNametxt = newValue,
