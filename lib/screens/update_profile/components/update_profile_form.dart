@@ -40,6 +40,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
   late TextEditingController _firstNameController;
   late TextEditingController _lastNameController;
   late TextEditingController _phoneNumberController;
+  late TextEditingController _profilePicController;
   late double _longitude;
   late double _latitude;
 
@@ -51,6 +52,8 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
     _lastNameController =
         TextEditingController(text: widget.userInfo?.lastName);
     _phoneNumberController =
+        TextEditingController(text: widget.userInfo?.phoneNumber);
+    _profilePicController =
         TextEditingController(text: widget.userInfo?.phoneNumber);
     _longitude = 33.3;
     _latitude = 35.4;
@@ -68,6 +71,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
         _firstNameController.text = updatedUserInfo.firstName;
         _lastNameController.text = updatedUserInfo.lastName;
         _phoneNumberController.text = updatedUserInfo.phoneNumber;
+        _profilePicController.text = updatedUserInfo.imageUrl;
         _longitude = updatedUserInfo.longitude ?? 0.0;
         _latitude = updatedUserInfo.latitude ?? 0.0;
       });
@@ -123,7 +127,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
             onPickImage: (File pickedImage) {
               _selectedImage = pickedImage;
             },
-            imageUrl: '',
+            imageUrl: _profilePicController.text,
           ),
           const SizedBox(height: 20),
           TextFormField(

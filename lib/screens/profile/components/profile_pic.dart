@@ -12,7 +12,7 @@ class ProfilePic extends StatefulWidget {
     Key? key,
     required this.onPickImage,
     required this.imageUrl,
-  });
+  }) : super(key: key);
 
   final void Function(File pickedImage) onPickImage;
   final String imageUrl;
@@ -27,10 +27,6 @@ class _ProfilePicState extends State<ProfilePic> {
   @override
   void initState() {
     super.initState();
-    // Load the image if an imageUrl is provided
-    if (widget.imageUrl.isNotEmpty) {
-      _loadImageFromUrl(widget.imageUrl);
-    }
   }
 
   Future<void> _pickImage(ImageSource source) async {
@@ -50,21 +46,6 @@ class _ProfilePicState extends State<ProfilePic> {
       }
     } catch (error) {
       print('Error picking image: $error');
-      // Handle error (show a message, log, etc.)
-    }
-  }
-
-  Future<void> _loadImageFromUrl(String imageUrl) async {
-    try {
-      final response = await http.get(Uri.parse(imageUrl));
-      if (response.statusCode == 200) {
-        final bytes = response.bodyBytes;
-        setState(() {
-          _image = File.fromRawPath(bytes);
-        });
-      }
-    } catch (error) {
-      print('Error loading image from URL: $error');
       // Handle error (show a message, log, etc.)
     }
   }
@@ -123,9 +104,11 @@ class _ProfilePicState extends State<ProfilePic> {
         clipBehavior: Clip.none,
         children: [
           CircleAvatar(
-            backgroundImage: _image != null
-                ? FileImage(_image!) as ImageProvider<Object>
-                : const AssetImage("assets/images/Profile Image.png"),
+            backgroundImage:
+                // _image != null
+                //     ? FileImage(_image!) // If there is a selected image, use it
+                NetworkImage(
+                    widget.imageUrl), // Otherwise, use the network image
           ),
           Positioned(
             right: -16,
