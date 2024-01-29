@@ -17,7 +17,7 @@ class FirebaseOperations {
       final ref = FirebaseDatabase.instance.ref();
       final snapshot = await ref
           .child('users')
-          .child(savedEmail!.replaceFirst(".", ""))
+          .child(savedEmail!.replaceAll(RegExp(r'[.#$\[\]]'), ''))
           .get();
 
       if (snapshot.exists) {
@@ -86,10 +86,10 @@ class FirebaseOperations {
 
     await _databaseReference
         .child('users')
-        .child(email.replaceFirst(".", ""))
+        .child(email.replaceAll(RegExp(r'[.#$\[\]]'), ''))
         .set(userData);
 
     // Upload the image to Firebase Storage
-    await uploadImage(email.replaceFirst(".", ""), image!);
+    await uploadImage(email.replaceAll(RegExp(r'[.#$\[\]]'), ''), image!);
   }
 }

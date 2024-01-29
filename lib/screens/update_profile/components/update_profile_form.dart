@@ -198,10 +198,10 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
           SizedBox(
             height: 200,
             child: GoogleMap(
-              initialCameraPosition: const CameraPosition(
+              initialCameraPosition: CameraPosition(
                 target: LatLng(
-                  33.883432,
-                  35.513320,
+                  _latitude,
+                  _longitude,
                 ),
                 zoom: 11.0,
               ),

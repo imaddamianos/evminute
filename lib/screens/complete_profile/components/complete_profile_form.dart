@@ -32,6 +32,13 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   LatLng? userLocation;
   final GlobalLoader _globalLoader = GlobalLoader();
 
+  bool get isFormValid =>
+      firstNametxt != null &&
+      lastNametxt != null &&
+      phoneNumbertxt != null &&
+      _selectedImage != null &&
+      userLocation != null;
+
   void addError({String? error}) {
     if (!errors.contains(error)) {
       setState(() {
@@ -68,7 +75,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           lastNametxt != null &&
           phoneNumbertxt != null) {
         await FirebaseOperations().sendUserData(
-          email: savedEmail!.replaceFirst(".", ""),
+          email: savedEmail!.replaceAll(RegExp(r'[.#$\[\]]'), ''),
           firstName: firstNametxt!,
           lastName: lastNametxt!,
           phoneNumber: phoneNumbertxt!,
@@ -191,13 +198,16 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () async {
-              _globalLoader.showLoader(context);
-              if (_formKey.currentState!.validate()) {
-                await _sendUserDataToFirebase();
-              }
-              _globalLoader.hideLoader();
-            },
+            onPressed: isFormValid
+                ? () async {
+                    _globalLoader.showLoader(context);
+                    await _sendUserDataToFirebase();
+                    _globalLoader.hideLoader();
+                  }
+                : null, // Disable the button if the form is not valid
+            style: ElevatedButton.styleFrom(
+              primary: isFormValid ? Colors.blue : Colors.grey,
+            ),
             child: const Text("Continue"),
           ),
         ],
