@@ -1,16 +1,15 @@
 import 'dart:io';
-
-import 'package:evminute/screens/login_success/login_success_screen.dart';
+import 'package:evminute/helper/google_map_widget.dart';
 import 'package:evminute/screens/profile/components/profile_pic.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../../../components/custom_surfix_icon.dart';
 import '../../../components/form_error.dart';
 import '../../../constants.dart';
 import 'package:evminute/firebaseCalls/firebase_operations.dart';
 import 'package:evminute/helper/loader.dart';
 import 'package:evminute/helper/secure_storage.dart';
 import 'package:evminute/models/UserModel.dart';
+import 'package:evminute/helper/location_helper.dart';
 
 final _secureStorage = SecureStorage();
 File? _selectedImage;
@@ -43,6 +42,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
   late TextEditingController _profilePicController;
   late double _longitude;
   late double _latitude;
+  LatLng? userLocation;
 
   @override
   void initState() {
@@ -91,6 +91,18 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
       setState(() {
         errors.remove(error);
       });
+    }
+  }
+
+  Future<void> _getUserLocation() async {
+    LatLng? location = await LocationHelper.getUserLocation();
+    if (location != null) {
+      setState(() {
+        userLocation = location;
+      });
+    } else {
+      // Handle error or show a message to the user
+      print("Failed to get user location");
     }
   }
 
@@ -204,6 +216,13 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
                 ),
               },
             ),
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              _getUserLocation();
+            },
+            child: const Text("Get My Location"),
           ),
           const SizedBox(height: 20),
           ElevatedButton(

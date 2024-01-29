@@ -104,11 +104,9 @@ class _ProfilePicState extends State<ProfilePic> {
         clipBehavior: Clip.none,
         children: [
           CircleAvatar(
-            backgroundImage:
-                // _image != null
-                //     ? FileImage(_image!) // If there is a selected image, use it
-                NetworkImage(
-                    widget.imageUrl), // Otherwise, use the network image
+            backgroundImage: _image != null
+                ? FileImage(_image!) as ImageProvider<Object>
+                : NetworkImage(widget.imageUrl),
           ),
           Positioned(
             right: -16,
