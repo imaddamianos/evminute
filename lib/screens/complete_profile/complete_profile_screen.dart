@@ -31,7 +31,7 @@ class CompleteProfileScreen extends StatelessWidget {
                   CompleteProfileForm(),
                   SizedBox(height: 30),
                   Text(
-                    "By continuing your confirm that you agree \nwith our Term and Condition",
+                    "By continuing your confirm that you agree \nto share your information",
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.white),
                   ),

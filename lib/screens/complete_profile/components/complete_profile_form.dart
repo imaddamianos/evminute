@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:evminute/helper/loader.dart';
 import 'package:evminute/screens/login_success/login_success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,11 +11,11 @@ import '../../../constants.dart';
 import 'package:evminute/helper/location_helper.dart';
 import 'package:evminute/helper/google_map_widget.dart';
 import 'package:evminute/firebaseCalls/firebase_operations.dart';
-import 'package:evminute/helper/loader.dart';
 import 'package:evminute/helper/secure_storage.dart';
 
 final _secureStorage = SecureStorage();
 File? _selectedImage;
+final GlobalLoader _globalLoader = GlobalLoader();
 
 class CompleteProfileForm extends StatefulWidget {
   const CompleteProfileForm({Key? key}) : super(key: key);
@@ -30,7 +31,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   String? phoneNumbertxt;
   String? address;
   LatLng? userLocation;
-  final GlobalLoader _globalLoader = GlobalLoader();
+  // final GlobalLoader _globalLoader = GlobalLoader();
 
   bool get isFormValid =>
       firstNametxt != null &&
@@ -60,6 +61,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     if (location != null) {
       setState(() {
         userLocation = location;
+        _globalLoader.hideLoader();
       });
     } else {
       // Handle error or show a message to the user
@@ -103,6 +105,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             },
             imageUrl: '',
           ),
+          const SizedBox(height: 20),
           TextFormField(
             onSaved: (newValue) => firstNametxt = newValue,
             onChanged: (value) {
@@ -188,9 +191,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                         GoogleMapWidget(userLocation: userLocation!),
                   ),
                 );
+                _globalLoader.hideLoader();
               } else {
                 _getUserLocation();
-                _globalLoader.hideLoader();
               }
             },
             child:
