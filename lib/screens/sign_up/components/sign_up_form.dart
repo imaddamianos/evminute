@@ -191,9 +191,24 @@ class _SignUpFormState extends State<SignUpForm> {
                   );
                 } catch (e) {
                   // Handle any errors that occurred during user creation
-                  debugPrint("Error creating user: $e");
-                  // You can add error handling UI or display a snackbar here
+                  if (e is FirebaseAuthException) {
+                    if (e.code == 'email-already-in-use') {
+                      // The email address is already in use by another account.
+                      // Display a message to the user or use a snackbar.
+                      debugPrint("Error creating user: ${e.message}");
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('Email is already in use.')));
+                    } else {
+                      // Handle other FirebaseAuthException codes if needed
+                      debugPrint("Error creating user: ${e.message}");
+                    }
+                  } else {
+                    // Handle other exceptions
+                    debugPrint("Error creating user: $e");
+                  }
                 }
+                _globalLoader.hideLoader();
+              } else {
                 _globalLoader.hideLoader();
               }
             },
