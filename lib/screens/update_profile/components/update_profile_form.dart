@@ -1,5 +1,5 @@
+import 'dart:async';
 import 'dart:io';
-import 'package:evminute/helper/google_map_widget.dart';
 import 'package:evminute/screens/profile/components/profile_pic.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -43,6 +43,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
   late double _longitude;
   late double _latitude;
   LatLng? userLocation;
+  Completer<GoogleMapController> _mapController = Completer();
 
   @override
   void initState() {
@@ -60,6 +61,18 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
 
     // Call FirebaseOperations().getUserInfo() to get updated user info
     _updateUserInfo();
+  }
+
+  Future<void> _updateLocationOnMap() async {
+    await _getUserLocation();
+    if (userLocation != null && mapController != null) {
+      mapController!.animateCamera(
+        CameraUpdate.newLatLngZoom(
+          LatLng(userLocation!.latitude, userLocation!.longitude),
+          11.0,
+        ),
+      );
+    }
   }
 
   Future<void> _updateUserInfo() async {
@@ -109,22 +122,30 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
   Future<void> _sendUserDataToFirebase() async {
     if (_formKey.currentState!.validate()) {
       String? savedEmail = await _secureStorage.getEmail();
-      if (firstNametxt != null &&
-          lastNametxt != null &&
-          phoneNumbertxt != null) {
+      if (_firstNameController.text.isNotEmpty &&
+          _lastNameController.text.isNotEmpty &&
+          _phoneNumberController.text.isNotEmpty) {
         await FirebaseOperations().sendUserData(
           email: savedEmail!,
-          firstName: firstNametxt!,
-          lastName: lastNametxt!,
-          phoneNumber: phoneNumbertxt!,
+          firstName: _firstNameController.text,
+          lastName: _lastNameController.text,
+          phoneNumber: _phoneNumberController.text,
           latitude: _latitude,
           longitude: _longitude,
           image: _selectedImage,
         );
 
+        // Show a snackbar upon successful update
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Profile successfully updated!'),
+          ),
+        );
+
+        // Optionally, you can navigate to another screen after the update
         // Navigator.pushNamed(context, LoginSuccessScreen.routeName);
       } else {
-        print("Error: One or more required fields are null");
+        print("Error: One or more required fields are empty");
       }
     }
   }
@@ -198,6 +219,9 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
           SizedBox(
             height: 200,
             child: GoogleMap(
+              onMapCreated: (GoogleMapController controller) {
+                _mapController.complete(controller);
+              },
               initialCameraPosition: CameraPosition(
                 target: LatLng(
                   _latitude,
@@ -228,6 +252,10 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
           ElevatedButton(
             onPressed: () async {
               _globalLoader.showLoader(context);
+
+              // Update the location on the map before sending data to Firebase
+              await _updateLocationOnMap();
+
               if (_formKey.currentState!.validate()) {
                 await _sendUserDataToFirebase();
               }
