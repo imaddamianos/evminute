@@ -85,6 +85,7 @@ class _SignFormState extends State<SignForm> {
       child: Column(
         children: [
           TextFormField(
+            style: const TextStyle(color: Colors.white),
             keyboardType: TextInputType.emailAddress,
             onSaved: (newValue) => email = newValue,
             onChanged: (value) {
@@ -120,6 +121,7 @@ class _SignFormState extends State<SignForm> {
           ),
           const SizedBox(height: 20),
           TextFormField(
+            style: const TextStyle(color: Colors.white),
             obscureText: true,
             onSaved: (newValue) => password = newValue,
             onChanged: (value) {

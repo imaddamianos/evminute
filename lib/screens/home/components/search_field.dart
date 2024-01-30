@@ -11,6 +11,7 @@ class SearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Form(
       child: TextFormField(
+        style: const TextStyle(color: Colors.white),
         onChanged: (value) {},
         decoration: InputDecoration(
           filled: true,

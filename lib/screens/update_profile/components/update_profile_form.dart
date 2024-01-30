@@ -43,7 +43,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
   late double _longitude;
   late double _latitude;
   LatLng? userLocation;
-  Completer<GoogleMapController> _mapController = Completer();
+  final Completer<GoogleMapController> _mapController = Completer();
 
   @override
   void initState() {
@@ -55,9 +55,9 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
     _phoneNumberController =
         TextEditingController(text: widget.userInfo?.phoneNumber);
     _profilePicController =
-        TextEditingController(text: widget.userInfo?.phoneNumber);
-    _longitude = 33.3;
-    _latitude = 35.4;
+        TextEditingController(text: widget.userInfo?.imageUrl);
+    _longitude = widget.userInfo?.longitude ?? 33.3;
+    _latitude = widget.userInfo?.latitude ?? 35.4;
 
     // Call FirebaseOperations().getUserInfo() to get updated user info
     _updateUserInfo();
@@ -65,8 +65,9 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
 
   Future<void> _updateLocationOnMap() async {
     await _getUserLocation();
-    if (userLocation != null && mapController != null) {
-      mapController!.animateCamera(
+    if (userLocation != null && _mapController.isCompleted) {
+      final controller = await _mapController.future;
+      controller.animateCamera(
         CameraUpdate.newLatLngZoom(
           LatLng(userLocation!.latitude, userLocation!.longitude),
           11.0,
@@ -164,6 +165,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
           ),
           const SizedBox(height: 20),
           TextFormField(
+            style: const TextStyle(color: Colors.white),
             controller: _firstNameController,
             onSaved: (newValue) => firstNametxt = newValue,
             onChanged: (value) {
@@ -181,6 +183,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
           ),
           const SizedBox(height: 20),
           TextFormField(
+            style: const TextStyle(color: Colors.white),
             controller: _lastNameController,
             onSaved: (newValue) => lastNametxt = newValue,
             onChanged: (value) {
@@ -198,6 +201,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
           ),
           const SizedBox(height: 20),
           TextFormField(
+            style: const TextStyle(color: Colors.white),
             controller: _phoneNumberController,
             keyboardType: TextInputType.phone,
             onSaved: (newValue) => phoneNumbertxt = newValue,

@@ -71,6 +71,7 @@ class _SignUpFormState extends State<SignUpForm> {
       child: Column(
         children: [
           TextFormField(
+            style: const TextStyle(color: Colors.white),
             keyboardType: TextInputType.emailAddress,
             onSaved: (newValue) => email = newValue,
             onChanged: (value) {
@@ -104,6 +105,7 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
           const SizedBox(height: 20),
           TextFormField(
+            style: const TextStyle(color: Colors.white),
             obscureText: true,
             onSaved: (newValue) => password = newValue,
             onChanged: (value) {
@@ -137,6 +139,7 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
           const SizedBox(height: 20),
           TextFormField(
+            style: const TextStyle(color: Colors.white),
             obscureText: true,
             onSaved: (newValue) => conform_password = newValue,
             onChanged: (value) {

@@ -107,6 +107,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           ),
           const SizedBox(height: 20),
           TextFormField(
+            style: const TextStyle(color: Colors.white),
             onSaved: (newValue) => firstNametxt = newValue,
             onChanged: (value) {
               setState(() {
@@ -131,6 +132,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           ),
           const SizedBox(height: 20),
           TextFormField(
+            style: const TextStyle(color: Colors.white),
             onSaved: (newValue) => lastNametxt = newValue,
             onChanged: (value) {
               setState(() {
@@ -155,6 +157,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           ),
           const SizedBox(height: 20),
           TextFormField(
+            style: const TextStyle(color: Colors.white),
             keyboardType: TextInputType.phone,
             onSaved: (newValue) => phoneNumbertxt = newValue,
             onChanged: (value) {
