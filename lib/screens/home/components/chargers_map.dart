@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 // import 'package:flutter_3d_obj/flutter_3d_obj.dart';
@@ -21,24 +21,33 @@ class MapSampleState extends State<MapSample> {
   );
 
   Future<void> _loadMarkers() async {
-    await _addMarker(
-      const LatLng(33.8837062, 35.5583195),
-      'BMW',
-      'EV Charger AC 22kwh',
-      'assets/images/evChargerPoint.png',
-    );
-    await _addMarker(
-      const LatLng(33.9322844, 35.5884273),
-      'Solaris',
-      'EV fast chargers',
-      'assets/images/evChargerPoint.png',
-    );
-    await _addMarker(
-      const LatLng(33.9042313, 35.498526),
-      'Le Yacht Club',
-      'Fast Charger 100% charge in 3-4 hours Type 2',
-      'assets/images/evChargerPoint.png',
-    );
+    final CollectionReference<Map<String, dynamic>> markersCollection =
+        FirebaseFirestore.instance.collection('chargers');
+
+    try {
+      // Fetch markers from Firestore
+      final QuerySnapshot<Map<String, dynamic>> snapshot =
+          await markersCollection.get();
+
+      // Loop through the documents in the snapshot
+      for (QueryDocumentSnapshot<Map<String, dynamic>> document
+          in snapshot.docs) {
+        final Map<String, dynamic> data = document.data();
+
+        // Extract data from the document
+        final GeoPoint geoPoint = data['position'] as GeoPoint;
+        final LatLng position = LatLng(geoPoint.latitude, geoPoint.longitude);
+        final String title = data['title'] as String;
+        final String description = data['description'] as String;
+        const String image = 'assets/images/evChargerPoint.png';
+
+        // Add the marker using the _addMarker function
+        await _addMarker(position, title, description, image);
+      }
+    } catch (e) {
+      // Handle errors, e.g., network issues or Firestore permission issues
+      print('Error loading markers: $e');
+    }
   }
 
   @override
