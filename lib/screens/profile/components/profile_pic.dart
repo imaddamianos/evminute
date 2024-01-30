@@ -1,15 +1,10 @@
 import 'dart:io';
-import 'package:evminute/helper/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:evminute/helper/secure_storage.dart';
-import 'package:http/http.dart' as http;
-
-final _secureStorage = SecureStorage();
 
 class ProfilePic extends StatefulWidget {
-  ProfilePic({
+  const ProfilePic({
     Key? key,
     required this.onPickImage,
     required this.imageUrl,
@@ -24,18 +19,11 @@ class ProfilePic extends StatefulWidget {
 
 class _ProfilePicState extends State<ProfilePic> {
   File? _image;
-  final GlobalLoader _globalLoader = GlobalLoader();
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final ImagePicker _picker = ImagePicker();
 
   Future<void> _pickImage(ImageSource source) async {
-    _globalLoader.showLoader(context);
     try {
-      final picker = ImagePicker();
-      final pickedFile = await picker.pickImage(
+      final pickedFile = await _picker.pickImage(
         source: source,
         maxHeight: 150,
         imageQuality: 50,
@@ -45,12 +33,10 @@ class _ProfilePicState extends State<ProfilePic> {
         setState(() {
           _image = File(pickedFile.path);
           widget.onPickImage(_image!); // Notify parent widget
-          _globalLoader.hideLoader();
         });
       }
     } catch (error) {
       print('Error picking image: $error');
-      _globalLoader.hideLoader();
       // Handle error (show a message, log, etc.)
     }
   }

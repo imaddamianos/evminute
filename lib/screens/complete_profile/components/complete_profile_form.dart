@@ -190,8 +190,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        GoogleMapWidget(userLocation: userLocation!),
+                    builder: (context) => GoogleMapWidget(),
                   ),
                 );
                 _globalLoader.hideLoader();

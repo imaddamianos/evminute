@@ -48,6 +48,8 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
   @override
   void initState() {
     super.initState();
+    _updateLocationOnMap();
+    _updateUserInfo();
     _firstNameController =
         TextEditingController(text: widget.userInfo?.firstName);
     _lastNameController =
@@ -55,12 +57,9 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
     _phoneNumberController =
         TextEditingController(text: widget.userInfo?.phoneNumber);
     _profilePicController =
-        TextEditingController(text: widget.userInfo?.imageUrl);
-    _longitude = widget.userInfo?.longitude ?? 33.3;
-    _latitude = widget.userInfo?.latitude ?? 35.4;
-
-    // Call FirebaseOperations().getUserInfo() to get updated user info
-    _updateUserInfo();
+        TextEditingController(text: widget.userInfo?.phoneNumber);
+    _longitude = widget.userInfo?.longitude ?? 35.5399434;
+    _latitude = widget.userInfo?.latitude ?? 33.8748934;
   }
 
   Future<void> _updateLocationOnMap() async {
@@ -113,6 +112,12 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
     if (location != null) {
       setState(() {
         userLocation = location;
+        // If mapController is available, move the camera to the new location
+        if (mapController != null) {
+          mapController!.animateCamera(
+            CameraUpdate.newLatLngZoom(location, 11.0),
+          );
+        }
       });
     } else {
       // Handle error or show a message to the user
@@ -231,7 +236,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
                   _latitude,
                   _longitude,
                 ),
-                zoom: 11.0,
+                zoom: 15.0,
               ),
               markers: {
                 Marker(
