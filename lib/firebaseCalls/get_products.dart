@@ -18,6 +18,7 @@ class ProductService {
           price: data['price'].toDouble(),
           images: data['image'],
           id: data['id'],
+          isPopular: data['isPopular'],
         );
       }).toList();
 

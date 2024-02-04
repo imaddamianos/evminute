@@ -2,7 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evminute/models/Store.dart';
 import 'package:evminute/models/Product.dart';
-import 'package:evminute/firebaseCalls/get_products.dart'; // Import ProductService
+import 'package:evminute/firebaseCalls/get_products.dart';
 
 class StoreService {
   static Future<List<StoreData>> getStores() async {
