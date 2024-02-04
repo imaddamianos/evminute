@@ -1,5 +1,6 @@
 // special_offer_card.dart
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 
 class SpecialOfferCard extends StatelessWidget {
   const SpecialOfferCard({
@@ -25,9 +26,12 @@ class SpecialOfferCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             child: Stack(
               children: [
-                Image(
-                  image: NetworkImage(image),
-                  fit: BoxFit.cover,
+                Container(
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.all(10),
+                  child: Image(
+                    image: NetworkImage(image),
+                  ),
                 ),
                 Container(
                   decoration: const BoxDecoration(
@@ -35,10 +39,11 @@ class SpecialOfferCard extends StatelessWidget {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Color.fromARGB(150, 184, 184, 183),
-                        Color.fromARGB(200, 184, 184, 183),
+                        // Color.fromARGB(150, 184, 184, 183),
+                        // Color.fromARGB(200, 184, 184, 183),
                         Color.fromARGB(255, 184, 184, 183),
                         Colors.transparent,
+                        Color.fromARGB(200, 184, 184, 183),
                       ],
                     ),
                   ),
@@ -59,7 +64,8 @@ class SpecialOfferCard extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        // TextSpan(text: "$price")
+                        const TextSpan(
+                            text: 'New', style: TextStyle(color: Colors.green))
                       ],
                     ),
                   ),
