@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:evminute/screens/products/products_screen.dart';
+import 'package:evminute/firebaseCalls/get_stores.dart';
+import 'package:evminute/models/Store.dart';
 
 import 'section_title.dart';
 
@@ -19,37 +21,32 @@ class SpecialOffers extends StatelessWidget {
             press: () {},
           ),
         ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              SpecialOfferCard(
-                image: "assets/images/Image Banner 2.png",
-                category: "EVMINUTE",
-                numOfBrands: 1,
-                press: () {
-                  Navigator.pushNamed(context, ProductsScreen.routeName);
-                },
-              ),
-              // SpecialOfferCard(
-              //   image: "assets/images/Image Banner 2.png",
-              //   category: "Motion Motors",
-              //   numOfBrands: 18,
-              //   press: () {
-              //     Navigator.pushNamed(context, ProductsScreen.routeName);
-              //   },
-              // ),
-              // SpecialOfferCard(
-              //   image: "assets/images/Image Banner 3.png",
-              //   category: "Solaris",
-              //   numOfBrands: 24,
-              //   press: () {
-              //     Navigator.pushNamed(context, ProductsScreen.routeName);
-              //   },
-              // ),
-              const SizedBox(width: 20),
-            ],
-          ),
+        FutureBuilder<List<StoreData>>(
+          future: StoreService.getStores(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Text('No stores available');
+            } else {
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: snapshot.data!.map((store) {
+                    return SpecialOfferCard(
+                      location: store.location,
+                      name: store.name,
+                      press: () {
+                        Navigator.pushNamed(context, ProductsScreen.routeName);
+                      },
+                    );
+                  }).toList(),
+                ),
+              );
+            }
+          },
         ),
       ],
     );
@@ -59,14 +56,12 @@ class SpecialOffers extends StatelessWidget {
 class SpecialOfferCard extends StatelessWidget {
   const SpecialOfferCard({
     Key? key,
-    required this.category,
-    required this.image,
-    required this.numOfBrands,
+    required this.name,
+    required this.location,
     required this.press,
   }) : super(key: key);
 
-  final String category, image;
-  final int numOfBrands;
+  final String name, location;
   final GestureTapCallback press;
 
   @override
@@ -83,7 +78,7 @@ class SpecialOfferCard extends StatelessWidget {
             child: Stack(
               children: [
                 Image.asset(
-                  image,
+                  location,
                   fit: BoxFit.cover,
                 ),
                 Container(
@@ -110,13 +105,13 @@ class SpecialOfferCard extends StatelessWidget {
                       style: const TextStyle(color: Colors.white),
                       children: [
                         TextSpan(
-                          text: "$category\n",
+                          text: "$name\n",
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        TextSpan(text: "$numOfBrands Brands")
+                        // TextSpan(text: "$price")
                       ],
                     ),
                   ),

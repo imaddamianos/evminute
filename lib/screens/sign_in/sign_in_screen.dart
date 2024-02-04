@@ -1,4 +1,3 @@
-import 'package:evminute/models/UserModel.dart';
 import 'package:evminute/screens/login_success/login_success_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
