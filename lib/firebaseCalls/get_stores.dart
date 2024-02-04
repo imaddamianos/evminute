@@ -13,6 +13,7 @@ class StoreService {
       List<StoreData> stores =
           await Future.wait(querySnapshot.docs.map((doc) async {
         Map<String, dynamic> data = doc.data();
+        demoProducts.clear();
         List<Product> products = await ProductService.getProductsForStore(
             doc.reference.collection('products'));
 

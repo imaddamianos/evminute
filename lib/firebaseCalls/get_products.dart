@@ -21,6 +21,7 @@ class ProductService {
           isPopular: data['isPopular'],
         );
       }).toList();
+      demoProducts.addAll(products);
 
       return products;
     } catch (e) {
