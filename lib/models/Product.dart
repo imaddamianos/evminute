@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
 class Product {
   final int id;
@@ -18,7 +18,5 @@ class Product {
     required this.description,
   });
 }
-
-// Our demo Products
 
 List<Product> demoProducts = [];

@@ -1,6 +1,6 @@
-import 'package:evminute/models/Store.dart';
+// import 'package:evminute/models/Store.dart';
 import 'package:flutter/widgets.dart';
-import 'package:evminute/screens/products/products_screen.dart';
+// import 'package:evminute/screens/products/products_screen.dart';
 
 import 'screens/cart/cart_screen.dart';
 import 'screens/complete_profile/complete_profile_screen.dart';

@@ -1,6 +1,6 @@
 // special_offer_card.dart
 import 'package:flutter/material.dart';
-import 'package:location/location.dart';
+// import 'package:location/location.dart';
 
 class SpecialOfferCard extends StatelessWidget {
   const SpecialOfferCard({

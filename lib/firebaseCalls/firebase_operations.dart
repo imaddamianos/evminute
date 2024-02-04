@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:evminute/helper/loader.dart';
+// import 'package:evminute/helper/loader.dart';
 import 'package:evminute/models/UserModel.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -11,7 +11,7 @@ String imageUrl = '';
 class FirebaseOperations {
   // ignore: deprecated_member_use
   final _databaseReference = FirebaseDatabase.instance.reference();
-  final GlobalLoader _globalLoader = GlobalLoader();
+  // final GlobalLoader _globalLoader = GlobalLoader();
 
   Future<UserModel?> getUserInfo() async {
     try {
