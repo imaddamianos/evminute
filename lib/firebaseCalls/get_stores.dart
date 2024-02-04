@@ -1,22 +1,28 @@
+// store_service.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evminute/models/Store.dart';
-import 'package:evminute/screens/home/components/special_offers.dart';
+import 'package:evminute/models/Product.dart';
+import 'package:evminute/firebaseCalls/get_products.dart'; // Import ProductService
 
 class StoreService {
   static Future<List<StoreData>> getStores() async {
     try {
-      // Fetch store data from Firestore
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await FirebaseFirestore.instance.collection('stores').get();
 
-      // Convert the query snapshot to a list of StoreData
-      List<StoreData> stores = querySnapshot.docs.map((doc) {
+      List<StoreData> stores =
+          await Future.wait(querySnapshot.docs.map((doc) async {
         Map<String, dynamic> data = doc.data();
+        List<Product> products = await ProductService.getProductsForStore(
+            doc.reference.collection('products'));
+
         return StoreData(
           location: data['name'],
           name: data['name'],
+          image: data['image'],
+          products: products,
         );
-      }).toList();
+      }).toList());
 
       return stores;
     } catch (e) {

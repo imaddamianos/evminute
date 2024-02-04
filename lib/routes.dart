@@ -1,3 +1,4 @@
+import 'package:evminute/models/Store.dart';
 import 'package:flutter/widgets.dart';
 import 'package:evminute/screens/products/products_screen.dart';
 
@@ -28,7 +29,7 @@ final Map<String, WidgetBuilder> routes = {
   UpdateProfileScreen.routeName: (context) => const UpdateProfileScreen(),
   OtpScreen.routeName: (context) => const OtpScreen(),
   HomeScreen.routeName: (context) => const HomeScreen(),
-  ProductsScreen.routeName: (context) => const ProductsScreen(),
+  // ProductsScreen.routeName: (context) => const ProductsScreen(store: StoreData,),
   DetailsScreen.routeName: (context) => const DetailsScreen(),
   CartScreen.routeName: (context) => const CartScreen(),
   ProfileScreen.routeName: (context) => const ProfileScreen(),
