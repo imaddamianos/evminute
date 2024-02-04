@@ -29,13 +29,16 @@ class ProductCard extends StatelessWidget {
             AspectRatio(
               aspectRatio: 1.02,
               child: Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: kSecondaryColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Image.asset(product.images[0]),
-              ),
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: kSecondaryColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Image(
+                    image: NetworkImage(product.images[0]),
+                  )
+                  // Image.asset(product.images[0]),
+                  ),
             ),
             const SizedBox(height: 8),
             Text(
