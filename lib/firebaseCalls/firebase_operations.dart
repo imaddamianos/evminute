@@ -1,6 +1,7 @@
 import 'dart:io';
 // import 'package:evminute/helper/loader.dart';
 import 'package:evminute/models/UserModel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:evminute/helper/secure_storage.dart';
@@ -93,5 +94,9 @@ class FirebaseOperations {
 
     // Upload the image to Firebase Storage
     await uploadImage(email.replaceAll(RegExp(r'[.#$\[\]]'), ''), image!);
+  }
+
+  Future<void> sendPasswordResetEmail(String email) async {
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
   }
 }

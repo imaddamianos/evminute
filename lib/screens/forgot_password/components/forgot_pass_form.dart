@@ -1,3 +1,4 @@
+import 'package:evminute/firebaseCalls/firebase_operations.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/custom_surfix_icon.dart';
@@ -13,6 +14,8 @@ class ForgotPassForm extends StatefulWidget {
 }
 
 class _ForgotPassFormState extends State<ForgotPassForm> {
+  TextEditingController emailController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
   List<String> errors = [];
   String? email;
@@ -23,6 +26,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       child: Column(
         children: [
           TextFormField(
+            controller: emailController,
             style: const TextStyle(color: Colors.white),
             keyboardType: TextInputType.emailAddress,
             onSaved: (newValue) => email = newValue,
@@ -67,7 +71,19 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                // Do what you want to do
+                // Retrieve the email from the text field
+                String email = emailController.text.trim();
+
+                // Call the function to send a password reset email
+                FirebaseOperations().sendPasswordResetEmail(email);
+
+                // Optionally, show a message to the user
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                        'Password reset email sent to $email  Check your inbox'),
+                  ),
+                );
               }
             },
             child: const Text("Continue"),

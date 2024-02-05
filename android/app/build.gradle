@@ -30,7 +30,7 @@ def keystoreProperties = new Properties()
    }
 
 android {
-    namespace "com.example.evminute"
+    namespace "dev.evminute.imps"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
