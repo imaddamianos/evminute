@@ -7,10 +7,13 @@ import '../../products/products_screen.dart';
 import 'section_title.dart';
 
 class PopularProducts extends StatelessWidget {
-  const PopularProducts({super.key});
+  const PopularProducts({Key? key});
 
   @override
   Widget build(BuildContext context) {
+    List<Product> popularProducts =
+        demoProducts.where((product) => product.isPopular).toList();
+
     return Column(
       children: [
         Padding(
@@ -22,36 +25,31 @@ class PopularProducts extends StatelessWidget {
             },
           ),
         ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              ...List.generate(
-                demoProducts.length,
-                (index) {
-                  if (demoProducts[index].isPopular) {
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: ProductCard(
-                        product: demoProducts[index],
-                        onPress: () => Navigator.pushNamed(
-                          context,
-                          DetailsScreen.routeName,
-                          arguments: ProductDetailsArguments(
-                              product: demoProducts[index]),
-                        ),
+        SizedBox(
+          width: double.infinity,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Wrap(
+              spacing: 20.0, // Adjust the spacing between items
+              runSpacing: 20.0, // Adjust the spacing between rows
+              children: [
+                ...popularProducts.map((product) {
+                  return SizedBox(
+                    width: (MediaQuery.of(context).size.width - 60) / 2,
+                    child: ProductCard(
+                      product: product,
+                      onPress: () => Navigator.pushNamed(
+                        context,
+                        DetailsScreen.routeName,
+                        arguments: ProductDetailsArguments(product: product),
                       ),
-                    );
-                  }
-
-                  return const SizedBox
-                      .shrink(); // here by default width and height is 0
-                },
-              ),
-              const SizedBox(width: 20),
-            ],
+                    ),
+                  );
+                }),
+              ],
+            ),
           ),
-        )
+        ),
       ],
     );
   }
