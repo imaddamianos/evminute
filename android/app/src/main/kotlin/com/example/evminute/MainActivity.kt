@@ -1,4 +1,4 @@
-package com.example.evminute
+package dev.evminute.imps
 
 import io.flutter.embedding.android.FlutterActivity
 
