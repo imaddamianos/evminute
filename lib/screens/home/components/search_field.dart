@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 
 class SearchField extends StatelessWidget {
+  final Function(String) onSearch;
+
   const SearchField({
     Key? key,
+    required this.onSearch,
   }) : super(key: key);
 
   @override
@@ -12,7 +15,7 @@ class SearchField extends StatelessWidget {
     return Form(
       child: TextFormField(
         style: const TextStyle(color: Colors.white),
-        onChanged: (value) {},
+        onChanged: onSearch,
         decoration: InputDecoration(
           filled: true,
           fillColor: kSecondaryColor.withOpacity(0.1),
