@@ -1,4 +1,6 @@
 import 'package:evminute/helper/secure_storage.dart';
+import 'package:evminute/screens/home/home_screen.dart';
+import 'package:evminute/screens/init_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,7 +28,7 @@ class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
   String? email;
   String? password;
-  bool? remember = false;
+  bool? remember = true;
   final List<String?> errors = [];
 
   void addError({String? error}) {
@@ -57,6 +59,18 @@ class _SignFormState extends State<SignForm> {
     final savedPassword = await _secureStorage.getPassword();
 
     if (savedEmail != null && savedPassword != null) {
+      try {
+        await _firebase.signInWithEmailAndPassword(
+          email: savedEmail,
+          password: savedPassword,
+        );
+
+        Navigator.pushNamed(context, InitScreen.routeName);
+      } on FirebaseAuthException catch (e) {
+        // Handle any errors that occurred during sign-in
+        debugPrint("Error signing in: ${e.code}");
+        // You can add error handling UI or display a snackbar here
+      }
       setState(() {
         email = savedEmail;
         password = savedPassword;

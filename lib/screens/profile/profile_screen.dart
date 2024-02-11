@@ -5,6 +5,9 @@ import 'package:evminute/screens/update_profile/update_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'components/profile_menu.dart';
 import 'package:evminute/screens/sign_in/sign_in_screen.dart';
+import 'package:evminute/helper/secure_storage.dart';
+
+final _secureStorage = SecureStorage();
 
 class ProfileScreen extends StatelessWidget {
   static String routeName = "/profile";
@@ -50,6 +53,7 @@ class ProfileScreen extends StatelessWidget {
                 // try {
                 // await FirebaseAuth.instance
                 //     .signOut(); // Use FirebaseAuth to sign out
+                _secureStorage.clearEmailAndPassword();
                 Navigator.pushNamed(context, SignInScreen.routeName);
                 // } catch (e) {
                 //   // Handle sign-out errors if any
