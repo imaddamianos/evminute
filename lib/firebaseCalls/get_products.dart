@@ -29,4 +29,26 @@ class ProductService {
       throw e;
     }
   }
+
+  Future<List<Product>> getAllProductsFromAllStores() async {
+    List<Product> allProducts = [];
+
+    try {
+      CollectionReference storesCollection =
+          FirebaseFirestore.instance.collection('stores');
+      QuerySnapshot storeSnapshot = await storesCollection.get();
+      for (QueryDocumentSnapshot storeDoc in storeSnapshot.docs) {
+        CollectionReference productsCollection =
+            storeDoc.reference.collection('products');
+        List<Product> storeProducts =
+            await ProductService.getProductsForStore(productsCollection);
+        allProducts.addAll(storeProducts);
+      }
+    } catch (e) {
+      print('Error fetching products from all stores: $e');
+      throw e;
+    }
+
+    return allProducts;
+  }
 }

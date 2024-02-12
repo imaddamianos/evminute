@@ -1,3 +1,5 @@
+import 'package:evminute/firebaseCalls/get_products.dart';
+import 'package:evminute/firebaseCalls/get_stores.dart';
 import 'package:evminute/models/Product.dart';
 import 'package:flutter/material.dart';
 import 'package:evminute/models/UserModel.dart';
@@ -18,11 +20,28 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late List<Product> filteredProducts; // Declare filtered products list
-
+  // late List<Product> allProducts;
   @override
   void initState() {
     super.initState();
+    getAllProducts();
     filteredProducts = demoProducts; // Initialize filteredProducts
+  }
+
+  Future<void> getAllProducts() async {
+    try {
+      // Create an instance of ProductService
+      ProductService productService = ProductService();
+      // Fetch all products from all stores
+      List<Product> products =
+          await productService.getAllProductsFromAllStores();
+      setState(() {
+        filteredProducts = products; // Update allProducts with fetched products
+      });
+    } catch (e) {
+      // Handle error
+      print('Error fetching all products: $e');
+    }
   }
 
   @override
