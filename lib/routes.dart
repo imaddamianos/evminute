@@ -1,4 +1,5 @@
 // import 'package:evminute/models/Store.dart';
+import 'package:evminute/screens/social_media_page.dart';
 import 'package:flutter/widgets.dart';
 // import 'package:evminute/screens/products/products_screen.dart';
 
@@ -33,4 +34,5 @@ final Map<String, WidgetBuilder> routes = {
   DetailsScreen.routeName: (context) => const DetailsScreen(),
   CartScreen.routeName: (context) => const CartScreen(),
   ProfileScreen.routeName: (context) => const ProfileScreen(),
+  SocialMediaPage.routeName: (context) => const SocialMediaPage(),
 };
