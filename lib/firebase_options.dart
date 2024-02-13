@@ -67,9 +67,11 @@ class DefaultFirebaseOptions {
     messagingSenderId: '729418199644',
     projectId: 'evminute-519e3',
     storageBucket: 'evminute-519e3.appspot.com',
-    androidClientId: '729418199644-ekksb15a6pesnjed2clip6uakp6sle4r.apps.googleusercontent.com',
-    iosClientId: '729418199644-7mlc9puvaomai3uajnhdlpv30hu6cmoi.apps.googleusercontent.com',
-    iosBundleId: 'imps.evminute',
+    androidClientId:
+        '729418199644-ekksb15a6pesnjed2clip6uakp6sle4r.apps.googleusercontent.com',
+    iosClientId:
+        '729418199644-7mlc9puvaomai3uajnhdlpv30hu6cmoi.apps.googleusercontent.com',
+    iosBundleId: 'dev.evminute.imps',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -78,8 +80,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '729418199644',
     projectId: 'evminute-519e3',
     storageBucket: 'evminute-519e3.appspot.com',
-    androidClientId: '729418199644-ekksb15a6pesnjed2clip6uakp6sle4r.apps.googleusercontent.com',
-    iosClientId: '729418199644-bmkjrli8rrf7ssv9e2dvstc7vpim2oc4.apps.googleusercontent.com',
-    iosBundleId: 'com.example.evminute.RunnerTests',
+    androidClientId:
+        '729418199644-ekksb15a6pesnjed2clip6uakp6sle4r.apps.googleusercontent.com',
+    iosClientId:
+        '729418199644-bmkjrli8rrf7ssv9e2dvstc7vpim2oc4.apps.googleusercontent.com',
+    iosBundleId: 'dev.evminute.imps.RunnerTests',
   );
 }

@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:729418199644:android:c6b68ded3890ae120b6c99",
         "android_client_info": {
-          "package_name": "com.example.evminute"
+          "package_name": "dev.evminute.imps"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "729418199644-ot7arrq3v6ue2ld7pvsk3643lof1q9sv.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.evminute",
+            "package_name": "dev.evminute.imps",
             "certificate_hash": "5b78d6edfa39f09f5e0729de9d5b7d26a9ad31d2"
           }
         },
@@ -42,7 +42,7 @@
               "client_id": "729418199644-7mlc9puvaomai3uajnhdlpv30hu6cmoi.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "imps.evminute"
+                "bundle_id": "dev.evminute.imps"
               }
             }
           ]
