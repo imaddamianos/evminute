@@ -53,7 +53,6 @@ dependencies:
   cached_network_image: ^3.3.1
   cloud_firestore: ^4.14.0
   flutter_native_splash: ^2.3.10
-  url_launcher: ^6.2.4
 
 dev_dependencies:
   flutter_test:

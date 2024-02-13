@@ -1,7 +1,6 @@
 // import 'package:evminute/screens/complete_profile/complete_profile_screen.dart';
 // import 'package:evminute/screens/profile/components/profile_pic.dart';
 
-import 'package:evminute/screens/social_media_page.dart';
 import 'package:evminute/screens/update_profile/update_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'components/profile_menu.dart';
@@ -45,9 +44,7 @@ class ProfileScreen extends StatelessWidget {
             ProfileMenu(
               text: "Social Media",
               icon: "assets/icons/Question mark.svg",
-              press: () {
-                Navigator.pushNamed(context, SocialMediaPage.routeName);
-              },
+              press: () {},
             ),
             ProfileMenu(
               text: "Log Out",
