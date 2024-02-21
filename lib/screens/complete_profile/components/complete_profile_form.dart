@@ -211,7 +211,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                   }
                 : null, // Disable the button if the form is not valid
             style: ElevatedButton.styleFrom(
-              primary: isFormValid ? Colors.blue : Colors.grey,
+              backgroundColor: isFormValid ? Colors.blue : Colors.grey,
             ),
             child: const Text("Continue"),
           ),
