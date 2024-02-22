@@ -1,3 +1,4 @@
+import 'package:evminute/screens/chat/chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:evminute/constants.dart';
@@ -31,6 +32,7 @@ class _InitScreenState extends State<InitScreen> {
     const Center(
       child: Text("Chat will be available soon "),
     ),
+    // const ChatScreen(),
     const ProfileScreen()
   ];
 
