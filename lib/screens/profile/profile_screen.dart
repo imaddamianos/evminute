@@ -46,7 +46,7 @@ class ProfileScreen extends StatelessWidget {
               text: "Social Media",
               icon: "assets/icons/Question mark.svg",
               press: () {
-                Navigator.pushNamed(context, SocialMediaPage.routeName);
+                // Navigator.pushNamed(context, SocialMediaPage.routeName);
               },
             ),
             ProfileMenu(

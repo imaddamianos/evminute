@@ -35,6 +35,6 @@ final Map<String, WidgetBuilder> routes = {
   DetailsScreen.routeName: (context) => const DetailsScreen(),
   CartScreen.routeName: (context) => const CartScreen(),
   ProfileScreen.routeName: (context) => const ProfileScreen(),
-  SocialMediaPage.routeName: (context) => const SocialMediaPage(),
+  // SocialMediaPage.routeName: (context) => const SocialMediaPage(),
   ChatScreen.routeName: (context) => const ChatScreen(),
 };

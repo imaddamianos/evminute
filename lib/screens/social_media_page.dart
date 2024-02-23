@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SocialMediaPage extends StatefulWidget {
-  static String routeName = "/social_media";
+  // static String routeName = "/social_media";
   const SocialMediaPage({Key? key}) : super(key: key);
 
   @override
