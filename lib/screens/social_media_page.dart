@@ -77,7 +77,7 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
               ),
             ),
             onTap: () {
-              _launchUrl("www.tiktok.com/evminute");
+              _launchUrl("www.tiktok.com/@evminute");
             },
           ),
           const SizedBox(height: 30),
