@@ -177,11 +177,13 @@ class _SignFormState extends State<SignForm> {
                 activeColor: kPrimaryColor,
                 onChanged: (value) {
                   setState(() {
-                    remember = value;
-                    // If "Remember me" is checked, save email and password
-                    if (remember!) {
+                    // Only update the state if the value changes to true
+                    if (value == true) {
+                      remember = value;
+                      // If "Remember me" is checked, save email and password
                       _secureStorage.saveEmailAndPassword(email, password);
                     } else {
+                      remember = value;
                       // If "Remember me" is unchecked, clear saved email and password
                       _secureStorage.clearEmailAndPassword();
                     }
@@ -226,10 +228,11 @@ class _SignFormState extends State<SignForm> {
                   debugPrint("Error signing in: ${e.code}");
                   // You can add error handling UI or display a snackbar here
                 }
-                _globalLoader.hideLoader();
+
                 // ignore: use_build_context_synchronously
                 KeyboardUtil.hideKeyboard(context);
               }
+              _globalLoader.hideLoader();
             },
             child: const Text("L O G I N"),
           ),
