@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evminute/firebaseCalls/firebase_operations.dart';
 import 'package:evminute/models/UserModel.dart';
+// import 'package:evminute/firebaseCalls/firebase_operations.dart';
+// import 'package:evminute/models/UserModel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class NewMessages extends StatefulWidget {
@@ -12,6 +15,7 @@ class NewMessages extends StatefulWidget {
 
 class _NewMessagesState extends State<NewMessages> {
   final _messageController = TextEditingController();
+  final authUser = FirebaseAuth.instance.currentUser!;
   UserModel? userInfo;
 
   @override
@@ -42,16 +46,12 @@ class _NewMessagesState extends State<NewMessages> {
     FocusScope.of(context).unfocus();
     _messageController.clear();
 
-    if (userInfo != null) {
-      await FirebaseFirestore.instance.collection('chat').add({
-        'text': enteredMessage,
-        'createdAt': Timestamp.now(),
-        'userId': userInfo!.firstName,
-        'userImage': userInfo!.imageUrl,
-      });
-    } else {
-      print('User data does not exist or is empty');
-    }
+    await FirebaseFirestore.instance.collection('chat').add({
+      'text': enteredMessage,
+      'createdAt': Timestamp.now(),
+      'userId': authUser.uid,
+      'userImage': userInfo!.imageUrl,
+    });
   }
 
   @override
