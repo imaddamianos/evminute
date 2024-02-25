@@ -1,19 +1,17 @@
 import 'dart:io';
-// import 'package:evminute/helper/loader.dart';
 import 'package:evminute/models/UserModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:evminute/helper/secure_storage.dart';
+import 'package:flutter/material.dart';
 
 final _secureStorage = SecureStorage();
-String imageUrl = '';
 
 class FirebaseOperations {
   // ignore: deprecated_member_use
   final _databaseReference = FirebaseDatabase.instance.reference();
-  // final GlobalLoader _globalLoader = GlobalLoader();
-
+  String imageUrl = '';
   Future<UserModel?> getUserInfo() async {
     try {
       String? savedEmail = await _secureStorage.getEmail();
@@ -71,29 +69,34 @@ class FirebaseOperations {
     required String firstName,
     required String lastName,
     required String phoneNumber,
-    double? latitude,
-    double? longitude,
-    File? image,
+    required double? latitude,
+    required double? longitude,
+    required File? image,
   }) async {
-    final userData = {
-      'email': email,
-      'firstName': firstName,
-      'lastName': lastName,
-      'phoneNumber': phoneNumber,
-      'userLocation': {
-        'latitude': latitude,
-        'longitude': longitude,
-      },
-      'image': imageUrl,
-    };
+    try {
+      final imageUrl =
+          await uploadImage(email.replaceAll(RegExp(r'[.#$\[\]]'), ''), image!);
 
-    await _databaseReference
-        .child('users')
-        .child(email.replaceAll(RegExp(r'[.#$\[\]]'), ''))
-        .set(userData);
+      final userData = {
+        'email': email,
+        'firstName': firstName,
+        'lastName': lastName,
+        'phoneNumber': phoneNumber,
+        'userLocation': {
+          'latitude': latitude,
+          'longitude': longitude,
+        },
+        'image': imageUrl,
+      };
 
-    // Upload the image to Firebase Storage
-    await uploadImage(email.replaceAll(RegExp(r'[.#$\[\]]'), ''), image!);
+      await _databaseReference
+          .child('users')
+          .child(email.replaceAll(RegExp(r'[.#$\[\]]'), ''))
+          .set(userData);
+    } catch (error) {
+      print('Error sending user data: $error');
+      // Handle error (show a message, log, etc.)
+    }
   }
 
   Future<void> sendPasswordResetEmail(String email) async {

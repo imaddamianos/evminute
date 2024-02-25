@@ -12,7 +12,6 @@ import 'package:evminute/models/UserModel.dart';
 import 'package:evminute/helper/location_helper.dart';
 
 final _secureStorage = SecureStorage();
-File? _selectedImage;
 TextEditingController firstNameController = TextEditingController();
 TextEditingController lastNameController = TextEditingController();
 TextEditingController phoneNumberController = TextEditingController();
@@ -35,6 +34,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
   String? lastNametxt;
   String? phoneNumbertxt;
   final GlobalLoader _globalLoader = GlobalLoader();
+  File? _selectedImage;
 
   late TextEditingController _firstNameController;
   late TextEditingController _lastNameController;
@@ -57,7 +57,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
     _phoneNumberController =
         TextEditingController(text: widget.userInfo?.phoneNumber);
     _profilePicController =
-        TextEditingController(text: widget.userInfo?.phoneNumber);
+        TextEditingController(text: widget.userInfo?.imageUrl);
     _longitude = widget.userInfo?.longitude ?? 35.5399434;
     _latitude = widget.userInfo?.latitude ?? 33.8748934;
   }
@@ -130,7 +130,8 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
       String? savedEmail = await _secureStorage.getEmail();
       if (_firstNameController.text.isNotEmpty &&
           _lastNameController.text.isNotEmpty &&
-          _phoneNumberController.text.isNotEmpty) {
+          _phoneNumberController.text.isNotEmpty &&
+          _selectedImage != null) {
         await FirebaseOperations().sendUserData(
           email: savedEmail!,
           firstName: _firstNameController.text,
@@ -141,7 +142,6 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
           image: _selectedImage,
         );
 
-        // Show a snackbar upon successful update
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Profile successfully updated!'),
@@ -151,7 +151,12 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
         // Optionally, you can navigate to another screen after the update
         // Navigator.pushNamed(context, LoginSuccessScreen.routeName);
       } else {
-        print("Error: One or more required fields are empty");
+        // Show a snackbar upon successful update
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('something went wrong, press Update!'),
+          ),
+        );
       }
     }
   }

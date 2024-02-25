@@ -1,12 +1,10 @@
 import 'package:evminute/firebaseCalls/get_products.dart';
-import 'package:evminute/firebaseCalls/get_stores.dart';
 import 'package:evminute/models/Product.dart';
 import 'package:flutter/material.dart';
 import 'package:evminute/models/UserModel.dart';
 import 'package:evminute/firebaseCalls/firebase_operations.dart';
 import 'components/discount_banner.dart';
 import 'components/home_header.dart';
-import 'components/popular_product.dart';
 import 'components/special_offers.dart';
 
 class HomeScreen extends StatefulWidget {

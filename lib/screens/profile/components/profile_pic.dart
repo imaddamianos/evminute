@@ -19,10 +19,15 @@ class ProfilePic extends StatefulWidget {
 
 class _ProfilePicState extends State<ProfilePic> {
   File? _image;
+  bool _isLoading = false; // Track whether image is being uploaded
   final ImagePicker _picker = ImagePicker();
 
   Future<void> _pickImage(ImageSource source) async {
     try {
+      setState(() {
+        _isLoading = true; // Start loading
+      });
+
       final pickedFile = await _picker.pickImage(
         source: source,
         maxHeight: 150,
@@ -32,58 +37,20 @@ class _ProfilePicState extends State<ProfilePic> {
       if (pickedFile != null) {
         setState(() {
           _image = File(pickedFile.path);
-          widget.onPickImage(_image!); // Notify parent widget
         });
+        widget.onPickImage(_image!); // Notify parent widget
       }
     } catch (error) {
       print('Error picking image: $error');
       // Handle error (show a message, log, etc.)
+    } finally {
+      setState(() {
+        _isLoading = false; // Stop loading
+      });
     }
   }
 
-  Future<void> _showImageSourceDialog() async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Select Image Source"),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: [
-                _buildImageSourceOption(
-                  icon: Icons.photo_library,
-                  title: "Gallery",
-                  source: ImageSource.gallery,
-                ),
-                _buildImageSourceOption(
-                  icon: Icons.camera_alt,
-                  title: "Camera",
-                  source: ImageSource.camera,
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildImageSourceOption({
-    required IconData icon,
-    required String title,
-    required ImageSource source,
-  }) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pop(context);
-        _pickImage(source);
-      },
-      child: ListTile(
-        leading: Icon(icon),
-        title: Text(title),
-      ),
-    );
-  }
+  // Remaining code remains the same
 
   @override
   Widget build(BuildContext context) {
@@ -105,24 +72,63 @@ class _ProfilePicState extends State<ProfilePic> {
             child: SizedBox(
               height: 46,
               width: 46,
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                    side: const BorderSide(color: Colors.white),
-                  ),
-                  backgroundColor: const Color(0xFFF5F6F9),
-                ),
-                onPressed: () async {
-                  await _showImageSourceDialog();
-                },
-                child: SvgPicture.asset("assets/icons/Camera Icon.svg"),
-              ),
+              child: _isLoading // Show loader if image is being uploaded
+                  ? CircularProgressIndicator()
+                  : TextButton(
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                          side: const BorderSide(color: Colors.white),
+                        ),
+                        backgroundColor: const Color(0xFFF5F6F9),
+                      ),
+                      onPressed: () async {
+                        await _showImageSourceDialog();
+                      },
+                      child: SvgPicture.asset("assets/icons/Camera Icon.svg"),
+                    ),
             ),
           )
         ],
       ),
+    );
+  }
+
+  Future<void> _showImageSourceDialog() async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Select Image Source"),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                    _pickImage(ImageSource.gallery);
+                  },
+                  child: const ListTile(
+                    leading: Icon(Icons.photo_library),
+                    title: Text("Gallery"),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                    _pickImage(ImageSource.camera);
+                  },
+                  child: const ListTile(
+                    leading: Icon(Icons.camera_alt),
+                    title: Text("Camera"),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
