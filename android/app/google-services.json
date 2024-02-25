@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "729418199644",
+    "firebase_url": "https://evminute-519e3-default-rtdb.firebaseio.com",
     "project_id": "evminute-519e3",
     "storage_bucket": "evminute-519e3.appspot.com"
   },
@@ -28,7 +29,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDXO3KJ9Fdadkds6TH98ooU0YIEzVWvJRQ"
+          "current_key": "AIzaSyCCCmDyqmbhbT8oaRoEBleCxQAND3dyx3Y"
         }
       ],
       "services": {
@@ -42,7 +43,7 @@
               "client_id": "729418199644-7mlc9puvaomai3uajnhdlpv30hu6cmoi.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "dev.evminute.imps"
+                "bundle_id": "imps.evminute"
               }
             }
           ]

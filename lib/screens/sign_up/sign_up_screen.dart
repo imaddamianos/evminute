@@ -1,11 +1,13 @@
 import 'package:evminute/components/socal_card.dart';
+import 'package:evminute/helper/secure_storage.dart';
 import 'package:evminute/screens/complete_profile/complete_profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 import '../../constants.dart';
 import 'components/sign_up_form.dart';
+
+final _secureStorage = SecureStorage();
 
 class SignUpScreen extends StatelessWidget {
   static String routeName = "/sign_up";
@@ -41,6 +43,7 @@ class SignUpScreen extends StatelessWidget {
           CompleteProfileScreen.routeName,
           arguments: user.email,
         );
+        _secureStorage.saveEmailAndPassword(user.email, '');
       }
     } catch (e) {
       // Handle errors
