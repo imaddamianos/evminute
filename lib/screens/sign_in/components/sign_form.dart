@@ -1,8 +1,10 @@
 import 'package:evminute/helper/secure_storage.dart';
+import 'package:evminute/helper/sign_in_google.dart';
 import 'package:evminute/screens/init_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../components/custom_surfix_icon.dart';
 import '../../../components/form_error.dart';
 import '../../../constants.dart';
@@ -29,6 +31,7 @@ class _SignFormState extends State<SignForm> {
   String? password;
   bool? remember = true;
   final List<String?> errors = [];
+  final AuthService _authService = AuthService();
 
   void addError({String? error}) {
     if (!errors.contains(error)) {
@@ -75,6 +78,17 @@ class _SignFormState extends State<SignForm> {
         password = savedPassword;
         remember = true;
       });
+    } else {
+      await checkGoogleSignInState(context);
+    }
+  }
+
+  Future<void> checkGoogleSignInState(BuildContext context) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final bool isGoogleLoggedIn = prefs.getBool('isGoogleLoggedIn') ?? false;
+    if (isGoogleLoggedIn) {
+      // User was previously signed in with Google, navigate to success screen
+      _authService.signInWithGoogle(context);
     }
   }
 

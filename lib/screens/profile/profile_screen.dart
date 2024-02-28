@@ -2,6 +2,7 @@ import 'package:evminute/screens/social_media_page.dart';
 import 'package:evminute/screens/update_profile/update_profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'components/profile_menu.dart';
 import 'package:evminute/screens/sign_in/sign_in_screen.dart';
 import 'package:evminute/helper/secure_storage.dart';
@@ -53,6 +54,9 @@ class ProfileScreen extends StatelessWidget {
               icon: "assets/icons/Log out.svg",
               press: () async {
                 try {
+                  final SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.remove('isGoogleLoggedIn');
                   await FirebaseAuth.instance
                       .signOut(); // Use FirebaseAuth to sign out
                   _secureStorage.clearEmailAndPassword();

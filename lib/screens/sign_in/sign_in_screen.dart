@@ -1,47 +1,16 @@
-import 'package:evminute/screens/login_success/login_success_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:evminute/helper/sign_in_google.dart';
 import 'package:flutter/material.dart';
 import '../../components/no_account_text.dart';
 import '../../components/socal_card.dart';
 import 'components/sign_form.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 
 class SignInScreen extends StatelessWidget {
   static String routeName = "/sign_in";
+  final AuthService _authService = AuthService();
 
-  SignInScreen({super.key});
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
-
-  Future<void> signInWithGoogle(BuildContext context) async {
-    try {
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
-
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-
-      // Sign in with Google using Firebase
-      final authResult =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-      final user = authResult.user;
-
-      // Fetch additional user details likfshowe display name
-      if (user != null) {
-        await user.reload(); // Reload user to get updated data
-        await user.getIdToken();
-        user.displayName;
-
-        // ignore: use_build_context_synchronously
-        Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-      }
-    } catch (e) {
-      // Handle errors
-      debugPrint(e.toString());
-    }
-  }
+  SignInScreen({Key? key}) : super(key: key);
+  // final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override
   Widget build(BuildContext context) {
@@ -68,15 +37,13 @@ class SignInScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const SignForm(),
-                  const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SocalCard(
                         icon: "assets/icons/google-icon.svg",
                         press: () {
-                          signInWithGoogle(context);
+                          _authService.signInWithGoogle(context);
                         },
                       ),
                       const Text(
@@ -87,6 +54,8 @@ class SignInScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
+                  const SignForm(),
+                  const SizedBox(height: 16),
                   const NoAccountText(),
                 ],
               ),
