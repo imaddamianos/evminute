@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 // import 'package:flutter_3d_obj/flutter_3d_obj.dart';
 
 class MapSample extends StatefulWidget {
@@ -103,7 +104,18 @@ class MapSampleState extends State<MapSample> {
         position: position,
         infoWindow: InfoWindow(
           title: title,
-          snippet: snippet,
+          snippet: snippet + '\n Tap to navigate',
+          // Customizing the info window with a button
+          onTap: () {
+            if (Theme.of(context).platform == TargetPlatform.iOS) {
+              final String googleMapsUrl =
+                  'https://www.google.com/maps/search/?api=1&query=${position.latitude},${position.longitude}';
+
+              // Launch the URL using the url_launcher package
+              // ignore: deprecated_member_use
+              launch(googleMapsUrl);
+            }
+          },
         ),
         icon: icon,
       ),
