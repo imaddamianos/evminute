@@ -258,6 +258,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
+              _updateLocationOnMap();
               _getUserLocation();
             },
             child: const Text("Get My Location"),

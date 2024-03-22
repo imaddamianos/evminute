@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:evminute/screens/sign_in/sign_in_screen.dart';
 import 'routes.dart';
 import 'theme.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,6 +12,30 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(MyApp());
+  requestPermissions();
+}
+
+Future<void> requestPermissions() async {
+  var status = await Permission.location.request();
+  if (status.isGranted) {
+    // Location permission is granted
+  } else {
+    // Handle denied or restricted permissions
+  }
+
+  status = await Permission.camera.request();
+  if (status.isGranted) {
+    // Camera permission is granted
+  } else {
+    // Handle denied or restricted permissions
+  }
+
+  status = await Permission.storage.request();
+  if (status.isGranted) {
+    // Storage permission is granted
+  } else {
+    // Handle denied or restricted permissions
+  }
 }
 
 class MyApp extends StatelessWidget {
