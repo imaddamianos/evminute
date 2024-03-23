@@ -3,8 +3,15 @@ import 'package:evminute/widgets/message_bubble.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class ChatMessages extends StatelessWidget {
-  const ChatMessages({super.key});
+class ChatMessages extends StatefulWidget {
+  const ChatMessages({Key? key}) : super(key: key);
+
+  @override
+  _ChatMessagesState createState() => _ChatMessagesState();
+}
+
+class _ChatMessagesState extends State<ChatMessages> {
+  final _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -14,29 +21,39 @@ class ChatMessages extends StatelessWidget {
           .collection('chat')
           .orderBy('createdAt', descending: false)
           .snapshots(),
-      builder: (ctx, snaphot) {
-        if (snaphot.connectionState == ConnectionState.waiting) {
+      builder: (ctx, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
-        if (!snaphot.hasData || snaphot.data!.docs.isEmpty) {
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
           return const Center(
             child: Text('No Message Found'),
           );
         }
-        if (snaphot.hasError || snaphot.data!.docs.isEmpty) {
+        if (snapshot.hasError || snapshot.data!.docs.isEmpty) {
           return const Center(
-            child: Text('something went wrong...'),
+            child: Text('Something went wrong...'),
           );
         }
-        final loadedMessage = snaphot.data!.docs;
+        final loadedMessages = snapshot.data!.docs;
+
+        WidgetsBinding.instance!.addPostFrameCallback((_) {
+          _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            duration: Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+          );
+        });
+
         return ListView.builder(
-          itemCount: loadedMessage.length,
+          controller: _scrollController,
+          itemCount: loadedMessages.length,
           itemBuilder: (ctx, index) {
-            final chatMessage = loadedMessage[index].data();
-            final nextMessage = index + 1 < loadedMessage.length
-                ? loadedMessage[index + 1].data()
+            final chatMessage = loadedMessages[index].data();
+            final nextMessage = index + 1 < loadedMessages.length
+                ? loadedMessages[index + 1].data()
                 : null;
             final currentMessageUserId = chatMessage['userId'];
             final nextMessageUserId =
@@ -60,5 +77,11 @@ class ChatMessages extends StatelessWidget {
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 }
