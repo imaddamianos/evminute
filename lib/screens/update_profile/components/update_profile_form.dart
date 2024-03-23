@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:evminute/components/custom_surfix_icon.dart';
 import 'package:evminute/screens/profile/components/profile_pic.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -183,6 +184,14 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
                 firstNametxt = value;
               });
             },
+            decoration: const InputDecoration(
+              labelText: "First Name",
+              hintText: "Enter your first name",
+              hintStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
+              labelStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
+            ),
             validator: (value) {
               if (value!.isEmpty) {
                 addError(error: kNamelNullError);
@@ -201,6 +210,14 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
                 lastNametxt = value;
               });
             },
+            decoration: const InputDecoration(
+              labelText: "Last Name",
+              hintText: "Enter your last name",
+              hintStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
+              labelStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
+            ),
             validator: (value) {
               if (value!.isEmpty) {
                 addError(error: kLastNamelNullError);
@@ -220,6 +237,14 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
                 phoneNumbertxt = value;
               });
             },
+            decoration: const InputDecoration(
+              labelText: "Phone Number",
+              hintText: "Enter your phone number",
+              hintStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
+              labelStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
+            ),
             validator: (value) {
               if (value!.isEmpty) {
                 addError(error: kPhoneNumberNullError);

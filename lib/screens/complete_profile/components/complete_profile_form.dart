@@ -93,129 +93,139 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     }
   }
 
-  @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          ProfilePic(
-            onPickImage: (File pickedImage) {
-              _selectedImage = pickedImage;
-            },
-            imageUrl: '',
-          ),
-          const SizedBox(height: 20),
-          TextFormField(
-            style: const TextStyle(color: Colors.white),
-            onSaved: (newValue) => firstNametxt = newValue,
-            onChanged: (value) {
-              setState(() {
-                firstNametxt = value;
-              });
-            },
-            validator: (value) {
-              if (value!.isEmpty) {
-                addError(error: kNamelNullError);
-                return "";
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              labelText: "First Name",
-              hintText: "Enter your first name",
-              hintStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
-              labelStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
+    return WillPopScope(
+      // This widget will intercept the back button press
+      onWillPop: () async {
+        // Return false to prevent the back button action
+        return false;
+      },
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            ProfilePic(
+              onPickImage: (File pickedImage) {
+                _selectedImage = pickedImage;
+              },
+              imageUrl: '',
             ),
-          ),
-          const SizedBox(height: 20),
-          TextFormField(
-            style: const TextStyle(color: Colors.white),
-            onSaved: (newValue) => lastNametxt = newValue,
-            onChanged: (value) {
-              setState(() {
-                lastNametxt = value;
-              });
-            },
-            validator: (value) {
-              if (value!.isEmpty) {
-                addError(error: kLastNamelNullError);
-                return "";
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              labelText: "Last Name",
-              hintText: "Enter your last name",
-              hintStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
-              labelStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
+            const SizedBox(height: 20),
+            TextFormField(
+              style: const TextStyle(color: Colors.white),
+              onSaved: (newValue) => firstNametxt = newValue,
+              onChanged: (value) {
+                setState(() {
+                  firstNametxt = value;
+                });
+              },
+              validator: (value) {
+                if (value!.isEmpty) {
+                  addError(error: kNamelNullError);
+                  return "";
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                labelText: "First Name",
+                hintText: "Enter your first name",
+                hintStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
+                labelStyle:
+                    TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          TextFormField(
-            style: const TextStyle(color: Colors.white),
-            keyboardType: TextInputType.phone,
-            onSaved: (newValue) => phoneNumbertxt = newValue,
-            onChanged: (value) {
-              setState(() {
-                phoneNumbertxt = value;
-              });
-            },
-            validator: (value) {
-              if (value!.isEmpty) {
-                addError(error: kPhoneNumberNullError);
-                return "";
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-              labelText: "Phone Number",
-              hintText: "Enter your phone number",
-              hintStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
-              labelStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
+            const SizedBox(height: 20),
+            TextFormField(
+              style: const TextStyle(color: Colors.white),
+              onSaved: (newValue) => lastNametxt = newValue,
+              onChanged: (value) {
+                setState(() {
+                  lastNametxt = value;
+                });
+              },
+              validator: (value) {
+                if (value!.isEmpty) {
+                  addError(error: kLastNamelNullError);
+                  return "";
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                labelText: "Last Name",
+                hintText: "Enter your last name",
+                hintStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
+                labelStyle:
+                    TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg"),
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          FormError(errors: errors),
-          ElevatedButton(
-            onPressed: () {
-              _globalLoader.showLoader(context);
-              if (userLocation != null) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => GoogleMapWidget(),
-                  ),
-                );
-                _globalLoader.hideLoader();
-              } else {
-                _getUserLocation();
-              }
-            },
-            child:
-                Text(userLocation != null ? "Show on Map" : "Get My Location"),
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: isFormValid
-                ? () async {
-                    _globalLoader.showLoader(context);
-                    await _sendUserDataToFirebase();
-                    _globalLoader.hideLoader();
-                  }
-                : null, // Disable the button if the form is not valid
-            style: ElevatedButton.styleFrom(
-              backgroundColor: isFormValid ? Colors.blue : Colors.grey,
+            const SizedBox(height: 20),
+            TextFormField(
+              style: const TextStyle(color: Colors.white),
+              keyboardType: TextInputType.phone,
+              onSaved: (newValue) => phoneNumbertxt = newValue,
+              onChanged: (value) {
+                setState(() {
+                  phoneNumbertxt = value;
+                });
+              },
+              validator: (value) {
+                if (value!.isEmpty) {
+                  addError(error: kPhoneNumberNullError);
+                  return "";
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                labelText: "Phone Number",
+                hintText: "Enter your phone number",
+                hintStyle: TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
+                labelStyle:
+                    TextStyle(color: Color.fromARGB(255, 184, 184, 183)),
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                suffixIcon:
+                    CustomSurffixIcon(svgIcon: "assets/icons/Phone.svg"),
+              ),
             ),
-            child: const Text("Continue"),
-          ),
-        ],
+            const SizedBox(height: 20),
+            FormError(errors: errors),
+            ElevatedButton(
+              onPressed: () {
+                _globalLoader.showLoader(context);
+                if (userLocation != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => GoogleMapWidget(),
+                    ),
+                  );
+                  _globalLoader.hideLoader();
+                } else {
+                  _getUserLocation();
+                }
+              },
+              child: Text(
+                  userLocation != null ? "Show on Map" : "Get My Location"),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: isFormValid
+                  ? () async {
+                      _globalLoader.showLoader(context);
+                      await _sendUserDataToFirebase();
+                      _globalLoader.hideLoader();
+                    }
+                  : null, // Disable the button if the form is not valid
+              style: ElevatedButton.styleFrom(
+                backgroundColor: isFormValid ? Colors.blue : Colors.grey,
+              ),
+              child: const Text("Continue"),
+            ),
+          ],
+        ),
       ),
     );
   }

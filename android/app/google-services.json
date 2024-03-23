@@ -15,19 +15,19 @@
       },
       "oauth_client": [
         {
+          "client_id": "729418199644-7g3e8u4c9cufo5lbuk3u6f4fo784be2r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.evminute.imps",
+            "certificate_hash": "45ba3fee937915de1d450cd29bee958218cee2b9"
+          }
+        },
+        {
           "client_id": "729418199644-fpfo07qptvc83qhi36maoqk6mtihq4va.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "dev.evminute.imps",
             "certificate_hash": "5b78d6edfa39f09f5e0729de9d5b7d26a9ad31d2"
-          }
-        },
-        {
-          "client_id": "729418199644-g8h1vb0n3s45usjorjj0j9gbuucp3m2t.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "dev.evminute.imps",
-            "certificate_hash": "14845860d1316f3539044dd7a135b13d7685d5fa"
           }
         },
         {

@@ -14,50 +14,57 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SizedBox(
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Image.asset(
-                    "assets/images/splash_1.png",
-                    width: 200,
-                  ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    "Welcome Back",
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 184, 184, 183),
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+    return WillPopScope(
+      // This widget will intercept the back button press
+      onWillPop: () async {
+        // Return false to prevent the back button action
+        return false;
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: SizedBox(
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Image.asset(
+                      "assets/images/splash_1.png",
+                      width: 200,
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SocalCard(
-                        icon: "assets/icons/google-icon.svg",
-                        press: () {
-                          _authService.signInWithGoogle(context);
-                        },
+                    const SizedBox(height: 16),
+                    const Text(
+                      "Welcome Back",
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 184, 184, 183),
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
                       ),
-                      const Text(
-                        "Sign in with Google",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  const SignForm(),
-                  const SizedBox(height: 16),
-                  const NoAccountText(),
-                ],
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SocalCard(
+                          icon: "assets/icons/google-icon.svg",
+                          press: () {
+                            _authService.signInWithGoogle(context);
+                          },
+                        ),
+                        const Text(
+                          "Sign in with Google",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    const SignForm(),
+                    const SizedBox(height: 16),
+                    const NoAccountText(),
+                  ],
+                ),
               ),
             ),
           ),

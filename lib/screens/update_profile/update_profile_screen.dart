@@ -23,7 +23,7 @@ class UpdateProfileScreen extends StatelessWidget {
                   SizedBox(height: 16),
                   Text("Profile", style: headingStyle),
                   Text(
-                    "Update your details",
+                    "Make sure all the info are correct",
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.white),
                   ),

@@ -1,6 +1,7 @@
+import 'package:evminute/helper/backbutton.dart';
+import 'package:flutter/material.dart';
 import 'package:evminute/firebaseCalls/get_products.dart';
 import 'package:evminute/models/Product.dart';
-import 'package:flutter/material.dart';
 import 'package:evminute/models/UserModel.dart';
 import 'package:evminute/firebaseCalls/firebase_operations.dart';
 import 'components/discount_banner.dart';
@@ -18,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late List<Product> filteredProducts; // Declare filtered products list
-  // late List<Product> allProducts;
+
   @override
   void initState() {
     super.initState();
@@ -85,9 +86,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           } else {
-            return const Center(
-                child:
-                    CircularProgressIndicator()); // Handle loading state if needed
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('complete your profile'),
+                const Center(child: CircularProgressIndicator()),
+              ],
+            ); // Handle loading state if needed
           }
         } else {
           return const Center(
