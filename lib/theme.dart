@@ -8,7 +8,7 @@ class AppTheme {
       scaffoldBackgroundColor: Color.fromARGB(255, 0, 62, 77),
       fontFamily: "Muli",
       appBarTheme: const AppBarTheme(
-          color: Color.fromARGB(0, 255, 255, 255),
+          color: Color.fromARGB(48, 255, 255, 255),
           elevation: 0,
           iconTheme: IconThemeData(color: Color.fromARGB(255, 255, 255, 255)),
           titleTextStyle: TextStyle(color: Color.fromARGB(255, 255, 255, 255))),

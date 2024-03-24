@@ -89,14 +89,18 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('complete your profile'),
-                const Center(child: CircularProgressIndicator()),
+                const Center(
+                    child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            Color.fromARGB(255, 255, 255, 255)))),
               ],
             ); // Handle loading state if needed
           }
         } else {
           return const Center(
-              child:
-                  CircularProgressIndicator()); // Handle loading state if needed
+              child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Color.fromARGB(
+                      255, 255, 255, 255)))); // Handle loading state if needed
         }
       },
     );

@@ -77,7 +77,9 @@ class MapSampleState extends State<MapSample> {
             );
           } else {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Color.fromARGB(255, 255, 255, 255))),
             );
           }
         },

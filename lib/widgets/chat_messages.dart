@@ -24,7 +24,9 @@ class _ChatMessagesState extends State<ChatMessages> {
       builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(
+                    Color.fromARGB(255, 255, 255, 255))),
           );
         }
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {

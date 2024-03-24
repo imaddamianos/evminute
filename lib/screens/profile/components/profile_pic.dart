@@ -73,7 +73,9 @@ class _ProfilePicState extends State<ProfilePic> {
               height: 46,
               width: 46,
               child: _isLoading // Show loader if image is being uploaded
-                  ? CircularProgressIndicator()
+                  ? CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                          Color.fromARGB(255, 255, 255, 255)))
                   : TextButton(
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
