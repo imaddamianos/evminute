@@ -14,7 +14,11 @@ class ChatScreen extends StatelessWidget {
         title: const Text('Group Chat'),
       ),
       body: Column(
-        children: [Expanded(child: ChatMessages()), NewMessages()],
+        children: [
+          Expanded(child: ChatMessages()),
+          SizedBox(height: 20),
+          NewMessages()
+        ],
       ),
     );
   }

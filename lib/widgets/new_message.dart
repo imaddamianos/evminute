@@ -60,8 +60,14 @@ class _NewMessagesState extends State<NewMessages> {
         children: [
           Expanded(
             child: TextField(
+              style: TextStyle(color: Colors.white),
               controller: _messageController,
-              decoration: InputDecoration(labelText: 'Send a Message'),
+              decoration: InputDecoration(
+                labelText: 'Send a Message',
+                labelStyle: TextStyle(
+                  color: Colors.white, // Change the color to your desired color
+                ),
+              ),
               autocorrect: true,
               enableSuggestions: true,
               textCapitalization: TextCapitalization.sentences,
@@ -71,7 +77,7 @@ class _NewMessagesState extends State<NewMessages> {
             onPressed: _sendMessage,
             icon: Icon(
               Icons.send,
-              color: Theme.of(context).colorScheme.primary,
+              color: Colors.white,
             ),
           ),
         ],
