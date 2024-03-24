@@ -16,6 +16,7 @@ class ProductService {
           title: data['name'],
           description: data['description'],
           price: data['price'].toDouble(),
+          rating: data['rating'].toDouble(),
           images: data['image'],
           id: data['id'],
           isPopular: data['isPopular'],

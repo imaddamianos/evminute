@@ -10,7 +10,7 @@ class Product {
   Product({
     required this.id,
     required this.images,
-    this.rating = 0.0,
+    required this.rating,
     this.isFavourite = false,
     this.isPopular = false,
     required this.title,

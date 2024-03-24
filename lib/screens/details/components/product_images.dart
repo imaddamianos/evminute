@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../../constants.dart';
 import '../../../models/Product.dart';
@@ -21,8 +22,13 @@ class _ProductImagesState extends State<ProductImages> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
+        AnimatedContainer(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+          ),
           width: 238,
+          duration: defaultDuration,
           child: AspectRatio(
             aspectRatio: 1,
             child: Image(
@@ -30,7 +36,7 @@ class _ProductImagesState extends State<ProductImages> {
             ),
           ),
         ),
-        // SizedBox(height: 20),
+        SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
