@@ -1,5 +1,6 @@
 import 'package:evminute/helper/google_map_widget.dart';
 import 'package:evminute/models/Product.dart';
+import 'package:evminute/screens/details/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:evminute/components/product_card.dart';
 import 'package:evminute/models/Store.dart';
@@ -98,7 +99,11 @@ class ProductsList extends StatelessWidget {
       ),
       itemBuilder: (context, index) => ProductCard(
         product: products[index],
-        onPress: () {},
+        onPress: () => Navigator.pushNamed(
+          context,
+          DetailsScreen.routeName,
+          arguments: ProductDetailsArguments(product: demoProducts[index]),
+        ),
       ),
     );
   }

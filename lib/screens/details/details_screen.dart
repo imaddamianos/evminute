@@ -1,10 +1,6 @@
 import 'package:evminute/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:evminute/screens/cart/cart_screen.dart';
-
 import '../../models/Product.dart';
-// import 'components/color_dots.dart';
 import 'components/product_description.dart';
 import 'components/product_images.dart';
 import 'components/top_rounded_container.dart';
