@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:evminute/components/product_card.dart';
 import 'package:evminute/models/Store.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -55,104 +56,60 @@ class StoreBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Column(
       children: [
+        // Image.network(
+        //   store.image,
+        // ),
         Container(
-          child: Column(
+          child: Row(
+            // mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SizedBox(height: 5),
-              Text(
-                store.name,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 255, 255, 255),
-                ),
+              Image.network(
+                height: 40,
+                store.image,
               ),
-              SizedBox(height: 10),
-              TextButton(
+              IconButton(
                 onPressed: () {
                   _callNumber(store.phone);
                 },
-                child: Text(
-                  'Call',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Color.fromARGB(255, 121, 121, 121),
-                  ),
-                ),
+                icon: Icon(Icons.phone,
+                    color: const Color.fromARGB(255, 255, 255, 255)),
               ),
-              TextButton(
+              IconButton(
+                onPressed: () {
+                  // Navigate to GoogleMapWidget with the provided location
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          GoogleMapWidget(initialLocation: store.location),
+                    ),
+                  );
+                },
+                icon: Icon(Icons.location_on,
+                    color: const Color.fromARGB(255, 255, 255, 255)),
+              ),
+              IconButton(
                 onPressed: () {
                   _launchUrl(store.website);
                 },
-                child: Text(
-                  'Visit Website',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Color.fromARGB(255, 0, 130, 251),
-                  ),
-                ),
+                icon: Icon(Icons.language,
+                    color: const Color.fromARGB(255, 255, 255, 255)),
               ),
-              TextButton(
+              IconButton(
                 onPressed: () {
                   openGmail(store.email);
                 },
-                child: Text(
-                  'Send Email',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Color.fromARGB(255, 255, 0, 0),
-                  ),
-                ),
+                icon: Icon(Icons.email,
+                    color: const Color.fromARGB(255, 255, 255, 255)),
               ),
-              // Text(
-              //   'Email: ${store.email}',
-              //   style: TextStyle(
-              //     fontSize: 16,
-              //   ),
-              // ),
-              // SizedBox(height: 8),
-              // Text(
-              //   'Website: ${store.website}',
-              //   style: TextStyle(
-              //     fontSize: 16,
-              //   ),
-              // ),
             ],
           ),
         ),
-        Column(
-          children: [
-            Image.network(
-              store.image,
-              width: 100,
-              // height: 100,
-              // fit: BoxFit.fitHeight,
-            ),
-            TextButton(
-              onPressed: () {
-                // Navigate to GoogleMapWidget with the provided location
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        GoogleMapWidget(initialLocation: store.location),
-                  ),
-                );
-              },
-              child: Text(
-                'Find store',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Color.fromARGB(255, 0, 130, 251),
-                ),
-              ),
-            ),
-          ],
-        ),
       ],
+      // ),
     );
   }
 }

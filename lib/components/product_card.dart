@@ -43,7 +43,10 @@ class ProductCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               product.title,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: const Color.fromARGB(
+                        255, 255, 255, 255), // Change the color here
+                  ),
               maxLines: 2,
             ),
             Row(
