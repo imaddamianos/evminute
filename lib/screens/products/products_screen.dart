@@ -4,6 +4,49 @@ import 'package:evminute/screens/details/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:evminute/components/product_card.dart';
 import 'package:evminute/models/Store.dart';
+import 'package:flutter/services.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+Future<void> _launchUrl(String url) async {
+  String instagramUrl = url.startsWith('http') ? url : 'https://$url';
+  try {
+    if (await canLaunch(instagramUrl)) {
+      await launch(instagramUrl);
+    } else {
+      throw 'Could not launch $instagramUrl';
+    }
+  } on PlatformException catch (e) {
+    print('Error launching Instagram: $e');
+    // Handle platform exceptions here
+  } catch (e) {
+    print('Error launching Instagram: $e');
+    // Handle other exceptions here
+  }
+}
+
+void openGmail(String email) async {
+  final Uri emailLaunchUri = Uri(
+    scheme: 'mailto',
+    path: email,
+  );
+
+  if (await canLaunch(emailLaunchUri.toString())) {
+    await launch(emailLaunchUri.toString());
+  } else {
+    throw 'Could not launch $emailLaunchUri';
+  }
+}
+
+void _callNumber(String phone) async {
+  final Uri callUri = Uri(scheme: 'tel', path: phone);
+  if (await canLaunch(callUri.toString())) {
+    await launch(callUri.toString());
+  } else {
+    throw 'Could not launch $callUri';
+  }
+}
 
 class StoreBanner extends StatelessWidget {
   final StoreData store;
@@ -16,7 +59,6 @@ class StoreBanner extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Container(
-          alignment: AlignmentDirectional.center,
           child: Column(
             children: [
               SizedBox(height: 5),
@@ -25,36 +67,46 @@ class StoreBanner extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 255, 255, 255),
                 ),
               ),
-              SizedBox(height: 8),
-              Text(
-                'Phone: ${store.phone}',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              // SizedBox(height: 8),
+              SizedBox(height: 10),
               TextButton(
                 onPressed: () {
-                  // Navigate to GoogleMapWidget with the provided location
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          GoogleMapWidget(initialLocation: store.location),
-                    ),
-                  );
+                  _callNumber(store.phone);
                 },
                 child: Text(
-                  'Find store',
+                  'Call',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color.fromARGB(255, 121, 121, 121),
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  _launchUrl(store.website);
+                },
+                child: Text(
+                  'Visit Website',
                   style: TextStyle(
                     fontSize: 16,
                     color: Color.fromARGB(255, 0, 130, 251),
                   ),
                 ),
               ),
-              SizedBox(height: 5),
+              TextButton(
+                onPressed: () {
+                  openGmail(store.email);
+                },
+                child: Text(
+                  'Send Email',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color.fromARGB(255, 255, 0, 0),
+                  ),
+                ),
+              ),
               // Text(
               //   'Email: ${store.email}',
               //   style: TextStyle(
@@ -71,14 +123,46 @@ class StoreBanner extends StatelessWidget {
             ],
           ),
         ),
-        Image.network(
-          store.image,
-          width: 100,
-          // height: 100,
-          // fit: BoxFit.fitHeight,
+        Column(
+          children: [
+            Image.network(
+              store.image,
+              width: 100,
+              // height: 100,
+              // fit: BoxFit.fitHeight,
+            ),
+            TextButton(
+              onPressed: () {
+                // Navigate to GoogleMapWidget with the provided location
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        GoogleMapWidget(initialLocation: store.location),
+                  ),
+                );
+              },
+              child: Text(
+                'Find store',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Color.fromARGB(255, 0, 130, 251),
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );
+  }
+}
+
+void _launchWebsite() async {
+  const url = 'https://www.evminute.co'; // Replace this with your website URL
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }
 

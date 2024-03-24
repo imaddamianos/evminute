@@ -22,6 +22,8 @@ class StoreService {
           name: data['name'],
           image: data['image'],
           phone: data['phone'],
+          website: data['website'],
+          email: data['email'],
           products: products,
         );
       }).toList());
