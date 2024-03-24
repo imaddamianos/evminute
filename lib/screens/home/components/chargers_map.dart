@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-// import 'package:flutter_3d_obj/flutter_3d_obj.dart';
 
 class MapSample extends StatefulWidget {
   const MapSample({Key? key}) : super(key: key);
@@ -15,38 +14,45 @@ class MapSample extends StatefulWidget {
 class MapSampleState extends State<MapSample> {
   final Completer<GoogleMapController> _controller = Completer();
   final Set<Marker> _markers = <Marker>{};
+  late LatLng _currentPosition;
 
   static const CameraPosition _initialPosition = CameraPosition(
     target: LatLng(33.8836224, 35.5548414),
     zoom: 12,
   );
 
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentLocation();
+  }
+
+  Future<void> _getCurrentLocation() async {
+    // Your logic to get the current location goes here
+    // For demonstration purposes, I'll use a static location
+    _currentPosition = const LatLng(33.8836224, 35.5548414);
+  }
+
   Future<void> _loadMarkers() async {
     final CollectionReference<Map<String, dynamic>> markersCollection =
         FirebaseFirestore.instance.collection('chargers');
 
     try {
-      // Fetch markers from Firestore
       final QuerySnapshot<Map<String, dynamic>> snapshot =
           await markersCollection.get();
 
-      // Loop through the documents in the snapshot
       for (QueryDocumentSnapshot<Map<String, dynamic>> document
           in snapshot.docs) {
         final Map<String, dynamic> data = document.data();
-
-        // Extract data from the document
         final GeoPoint geoPoint = data['position'] as GeoPoint;
         final LatLng position = LatLng(geoPoint.latitude, geoPoint.longitude);
         final String title = data['title'] as String;
         final String description = data['description'] as String;
         const String image = 'assets/images/evChargerPoint.png';
 
-        // Add the marker using the _addMarker function
         await _addMarker(position, title, description, image);
       }
     } catch (e) {
-      // Handle errors, e.g., network issues or Firestore permission issues
       print('Error loading markers: $e');
     }
   }
@@ -71,6 +77,9 @@ class MapSampleState extends State<MapSample> {
               mapType: MapType.normal,
               initialCameraPosition: _initialPosition,
               markers: _markers,
+              myLocationEnabled: true, // Show current location
+              myLocationButtonEnabled:
+                  true, // Show button to go to current location
               onMapCreated: (GoogleMapController controller) {
                 _controller.complete(controller);
               },
@@ -78,8 +87,10 @@ class MapSampleState extends State<MapSample> {
           } else {
             return const Center(
               child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                      Color.fromARGB(255, 255, 255, 255))),
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  Colors.white,
+                ),
+              ),
             );
           }
         },
@@ -107,20 +118,23 @@ class MapSampleState extends State<MapSample> {
         infoWindow: InfoWindow(
           title: title,
           snippet: snippet + '\n Tap to navigate',
-          // Customizing the info window with a button
           onTap: () {
-            if (Theme.of(context).platform == TargetPlatform.iOS) {
-              final String googleMapsUrl =
-                  'https://www.google.com/maps/search/?api=1&query=${position.latitude},${position.longitude}';
-
-              // Launch the URL using the url_launcher package
-              // ignore: deprecated_member_use
-              launch(googleMapsUrl);
-            }
+            _launchMapNavigation(position.latitude, position.longitude);
           },
         ),
         icon: icon,
       ),
     );
+  }
+
+  Future<void> _launchMapNavigation(double lat, double lng) async {
+    final String googleMapsUrl =
+        'https://www.google.com/maps/dir/?api=1&destination=$lat,$lng';
+
+    if (await canLaunch(googleMapsUrl)) {
+      await launch(googleMapsUrl);
+    } else {
+      throw 'Could not launch $googleMapsUrl';
+    }
   }
 }
