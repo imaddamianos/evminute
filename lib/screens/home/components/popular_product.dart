@@ -45,14 +45,20 @@ class _PopularProductsState extends State<PopularProducts> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(
+          height: 10,
+        ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 0),
           child: SectionTitle(
             title: "Popular Products",
             press: () {
               Navigator.pushNamed(context, ProductsScreen.routeName);
             },
           ),
+        ),
+        SizedBox(
+          height: 10,
         ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -71,7 +77,6 @@ class _PopularProductsState extends State<PopularProducts> {
                   ),
                 );
               }).toList(),
-              const SizedBox(width: 20),
             ],
           ),
         )

@@ -23,11 +23,6 @@ class SectionTitle extends StatelessWidget {
             color: Color.fromARGB(255, 184, 184, 183),
           ),
         ),
-        TextButton(
-          onPressed: press,
-          style: TextButton.styleFrom(foregroundColor: Colors.grey),
-          child: const Text(">"),
-        ),
       ],
     );
   }

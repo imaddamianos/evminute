@@ -23,6 +23,9 @@ class SpecialOffers extends StatelessWidget {
             press: () {},
           ),
         ),
+        SizedBox(
+          height: 10,
+        ),
         FutureBuilder<List<StoreData>>(
           future: StoreService.getStores(),
           builder: (context, snapshot) {
