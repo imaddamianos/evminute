@@ -18,9 +18,10 @@ class StoreService {
             doc.reference.collection('products'));
 
         return StoreData(
-          location: data['name'],
+          location: data['location'],
           name: data['name'],
           image: data['image'],
+          phone: data['phone'],
           products: products,
         );
       }).toList());

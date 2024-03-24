@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evminute/helper/loader.dart';
 import 'package:evminute/screens/login_success/login_success_screen.dart';
 import 'package:flutter/material.dart';
@@ -196,10 +197,13 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
               onPressed: () {
                 _globalLoader.showLoader(context);
                 if (userLocation != null) {
+                  GeoPoint initialLocation =
+                      GeoPoint(userLocation!.latitude, userLocation!.longitude);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => GoogleMapWidget(),
+                      builder: (context) =>
+                          GoogleMapWidget(initialLocation: initialLocation),
                     ),
                   );
                   _globalLoader.hideLoader();
